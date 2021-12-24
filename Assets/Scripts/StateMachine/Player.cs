@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 玩家脚本
+/// </summary>
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update

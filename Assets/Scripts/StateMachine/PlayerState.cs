@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 玩家状态基类脚本
+/// </summary>
 public class PlayerState
 {
     /// <summary>

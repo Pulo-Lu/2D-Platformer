@@ -2,17 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+/// <summary>
+/// 状态机脚本
+/// </summary>
+public class StateMachine
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// 当前状态
+    /// </summary>
+    public PlayerState CurrentState { get; private set; }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="InitState"></param>
+    public void Init(PlayerState InitState)
     {
-        
+        //设置当前状态
+        CurrentState = InitState;
+        //进入当前状态
+        CurrentState.Enter();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// 更改状态
+    /// </summary>
+    /// <param name="nextState"></param>
+    public void ChangeState(PlayerState nextState)
     {
-        
+        //退出状态
+        CurrentState.Exit();
+        //将当前状态设置为下一状态
+        CurrentState = nextState;
+        //进入当前状态
+        CurrentState.Enter();
     }
 }
