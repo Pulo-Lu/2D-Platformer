@@ -5,30 +5,10 @@ using UnityEngine;
 /// <summary>
 /// 玩家数据脚本
 /// </summary>
-public class PlayerData : MonoBehaviour
+[CreateAssetMenu(fileName ="newPlayerData",menuName ="Data/Player Data/Move Data")]
+public class PlayerData : ScriptableObject
 {
-    #region State
-    /// <summary>
-    /// 状态机
-    /// </summary>
-    public StateMachine stateMachine { get; private set; }
-
-
-    #endregion
-
-    private void Awake()
-    {
-        stateMachine = new StateMachine();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Move State")]
+    ///水平方向移动速度
+    public float movementVelocity = 10;
 }
