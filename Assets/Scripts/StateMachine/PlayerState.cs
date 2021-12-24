@@ -23,14 +23,22 @@ public class PlayerState
     /// 动画切换名
     /// </summary>
     protected string animBoolName;
+    /// <summary>
+    /// 水平方向输入
+    /// </summary>
+    protected int xInput;
+    /// <summary>
+    /// 竖直方向输入
+    /// </summary>
+    protected int yInput;
 
     /// <summary>
     /// 构造方法
     /// </summary>
-    /// <param name="player"></param>
-    /// <param name="playerData"></param>
-    /// <param name="stateMachine"></param>
-    /// <param name="animBoolName"></param>
+    /// <param name="player">玩家脚本</param>
+    /// <param name="playerData">玩家数据脚本</param>
+    /// <param name="stateMachine">状态机</param>
+    /// <param name="animBoolName">动画切换名称</param>
     public PlayerState(Player player, PlayerData playerData,StateMachine stateMachine, string animBoolName)
     {
         this.player = player;
@@ -44,7 +52,8 @@ public class PlayerState
     /// </summary>
     public virtual void Enter()
     {
-
+        //设置播放动画
+        player.animator.SetBool(animBoolName, true);
     }
 
     /// <summary>
@@ -52,7 +61,10 @@ public class PlayerState
     /// </summary>
     public virtual void LogicUpdate()
     {
-
+        //获取水平输入
+        xInput = player.inputHandler.NormalInputX;
+        //获取竖直输入
+        yInput = player.inputHandler.NormalInputY;
     }
 
     /// <summary>
@@ -68,7 +80,8 @@ public class PlayerState
     /// </summary>
     public virtual void Exit()
     {
-
+        //设置停止播放动画
+        player.animator.SetBool(animBoolName, false);
     }
 
     /// <summary>
