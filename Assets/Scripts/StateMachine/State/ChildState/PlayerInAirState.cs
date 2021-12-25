@@ -46,8 +46,15 @@ public class PlayerInAirState : PlayerState
     {
         base.LogicUpdate();
 
+        //有跳跃输入 且 跳跃次数不为0
+        if (jumpInput && player.jumpState.CanJump())
+        {
+            //切换到跳跃状态
+            stateMachine.ChangeState(player.jumpState);
+        }
+
         //为地面 且 玩家竖直速度接近0
-        if(isGround && player.CurrentVelocity.y < 0.01f)
+        if (isGround && player.CurrentVelocity.y < 0.01f)
         {
             //只有一只脚落地
             if (isSingleFootGround)
