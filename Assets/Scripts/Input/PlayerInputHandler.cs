@@ -20,7 +20,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// <summary>
     /// 保存玩家跳跃输入
     /// </summary>
-    public bool JumpInput { get; private set; }
+    public bool JumpInput { get; set; }
 
     /// <summary>
     /// 输入检测事件
@@ -46,12 +46,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             //跳跃
             JumpInput = true;
-        }
-        //按键抬起
-        if (context.canceled)
-        {
-            //取消跳跃
-            JumpInput = false;
         }
     }
 
