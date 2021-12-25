@@ -67,8 +67,13 @@ public class PlayerInAirState : PlayerState
         {
             //可以翻转
             player.CheckNeedFlip(xInput);
-            //
+            //设置水平方向速度 
             player.SetVelocityX(xInput * playerData.movementVelocity * playerData.movementInAir);
+
+            //设置动画条件
+            player.animator.SetFloat("XVelocity", Mathf.Abs(player.CurrentVelocity.x));
+            player.animator.SetFloat("YVelocity", player.CurrentVelocity.y);
+
         }
 
     }

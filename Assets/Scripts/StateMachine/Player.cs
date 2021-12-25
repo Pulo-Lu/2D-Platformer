@@ -140,6 +140,7 @@ public class Player : MonoBehaviour
         Temp = new Vector2(xVelocity, rb.velocity.y);
         //给刚体设置速度
         rb.velocity = CurrentVelocity = Temp;
+
     }
 
     /// <summary>

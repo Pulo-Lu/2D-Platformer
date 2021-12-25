@@ -60,7 +60,8 @@ public class PlayerState
     /// </summary>
     public virtual void Enter()
     {
-   
+        //射线检测
+        OnCheck();
         //设置播放动画
         player.animator.SetBool(animBoolName, true);
         //结束动画播放
