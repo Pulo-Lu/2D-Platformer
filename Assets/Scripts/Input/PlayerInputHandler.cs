@@ -13,10 +13,14 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public Vector2 MovementInput { get; private set; }
     /// <summary>
-    /// -1 0 1
+    /// 限制输入 -1 0 1
     /// </summary>
     public int NormalInputX { get; private set; }
     public int NormalInputY { get; private set; }
+    /// <summary>
+    /// 保存玩家跳跃输入
+    /// </summary>
+    public bool JumpInput { get; private set; }
 
     /// <summary>
     /// 输入检测事件
@@ -29,6 +33,26 @@ public class PlayerInputHandler : MonoBehaviour
         //Mathf.RoundToInt(X)  X 的绝对值大于0.5f四舍五入为1, 小于0.5f四舍五入为0
         NormalInputX = Mathf.RoundToInt(MovementInput.x);
         NormalInputY = Mathf.RoundToInt(MovementInput.y);
+    }
+
+    /// <summary>
+    /// 玩家跳跃事件
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnJumpInput(InputAction.CallbackContext context)
+    {
+        //按下按键
+        if (context.started)
+        {
+            //跳跃
+            JumpInput = true;
+        }
+        //按键抬起
+        if (context.canceled)
+        {
+            //取消跳跃
+            JumpInput = false;
+        }
     }
 
 }
