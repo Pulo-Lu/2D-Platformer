@@ -16,6 +16,8 @@ public class PlayerData : ScriptableObject
     [Header("Jump State")]
     //竖直方向移动速度
     public float jumpVelocity = 20;
+    //跳跃次数
+    public int maxJumpCount = 2;
 
     [Header("InAir State")]
     //空中方向移动速度
