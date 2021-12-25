@@ -28,6 +28,14 @@ public class Player : MonoBehaviour
     /// 玩家空中状态
     /// </summary>
     public PlayerInAirState inAirState { get; private set; }
+    /// <summary>
+    /// 正常落地状态（双脚落地）
+    /// </summary>
+    public PlayerLandState landState { get; private set; }
+    /// <summary>
+    /// 单脚落地状态
+    /// </summary>
+    public PlayerHardLandState hardLandState { get; private set; }
     #endregion
 
     #region Data
@@ -87,6 +95,10 @@ public class Player : MonoBehaviour
         jumpState = new PlayerJumpState(this, playerData, stateMachine, "InAir");
         //初始化空中状态
         inAirState = new PlayerInAirState(this, playerData, stateMachine, "InAir");
+        //初始化正常落地状态
+        landState = new PlayerLandState(this, playerData, stateMachine, "Land");
+        //初始化单脚落地状态
+        hardLandState = new PlayerHardLandState(this, playerData, stateMachine, "HardLand");
     }
 
     // Start is called before the first frame update
@@ -185,5 +197,16 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
         //改变玩家面向方向
         FaceDir = -FaceDir;
+    }
+
+    /// <summary>
+    /// 画圆
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        //画出左脚的球形检测
+        Gizmos.DrawWireSphere(LetfFoot.position, playerData.GroundCheckRadius);
+        //画出右脚的球形检测
+        Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
     }
 }

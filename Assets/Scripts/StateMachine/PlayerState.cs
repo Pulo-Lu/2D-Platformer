@@ -35,6 +35,10 @@ public class PlayerState
     /// 跳跃输入
     /// </summary>
     protected bool jumpInput;
+    /// <summary>
+    /// 动画是否播放完成
+    /// </summary>
+    protected bool isAnimationFinish;
 
     /// <summary>
     /// 构造方法
@@ -56,8 +60,11 @@ public class PlayerState
     /// </summary>
     public virtual void Enter()
     {
+   
         //设置播放动画
         player.animator.SetBool(animBoolName, true);
+        //结束动画播放
+        isAnimationFinish = false;
     }
 
     /// <summary>
@@ -96,5 +103,13 @@ public class PlayerState
     public virtual void OnCheck()
     {
 
+    }
+
+    /// <summary>
+    ///动画结束 
+    /// </summary>
+    public virtual void OnAnimationFinish()
+    {
+        isAnimationFinish = true;
     }
 }

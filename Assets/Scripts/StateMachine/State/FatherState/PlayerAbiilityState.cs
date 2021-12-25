@@ -61,7 +61,7 @@ public class PlayerAbiilityState : PlayerState
         //是否切换地面父类状态或者空中父类状态
         if (isAbilityDone)
         {
-            //地面
+            //为地面 且 玩家竖直速度接近0
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
                 //切换到等待状态
