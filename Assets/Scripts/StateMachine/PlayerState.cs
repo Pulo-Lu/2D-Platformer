@@ -24,13 +24,17 @@ public class PlayerState
     /// </summary>
     protected string animBoolName;
     /// <summary>
-    /// 水平方向输入
+    /// 限制水平方向输入
     /// </summary>
     protected int xInput;
     /// <summary>
-    /// 竖直方向输入
+    /// 限制竖直方向输入
     /// </summary>
     protected int yInput;
+    /// <summary>
+    /// 跳跃输入
+    /// </summary>
+    protected bool jumpInput;
 
     /// <summary>
     /// 构造方法
@@ -61,10 +65,12 @@ public class PlayerState
     /// </summary>
     public virtual void LogicUpdate()
     {
-        //获取水平输入
+        //限制水平输入
         xInput = player.inputHandler.NormalInputX;
-        //获取竖直输入
+        //限制竖直输入
         yInput = player.inputHandler.NormalInputY;
+        //获取跳跃输入
+        jumpInput = player.inputHandler.JumpInput;
     }
 
     /// <summary>

@@ -20,6 +20,14 @@ public class Player : MonoBehaviour
     /// 玩家移动状态
     /// </summary>
     public PlayerMoveState moveState { get; private set; }
+    /// <summary>
+    /// 玩家跳跃状态
+    /// </summary>
+    public PlayerJumpState jumpState { get; private set; }
+    /// <summary>
+    /// 玩家空中状态
+    /// </summary>
+    public PlayerInAirState inAirState { get; private set; }
     #endregion
 
     #region Data
@@ -41,6 +49,17 @@ public class Player : MonoBehaviour
     public int FaceDir { get; private set; }
     #endregion
 
+    #region Transform
+    /// <summary>
+    /// 玩家左脚 Transform
+    /// </summary>
+    public Transform LetfFoot;
+    /// <summary>
+    /// 玩家右脚 Transform
+    /// </summary>
+    public Transform RightFoot;
+    #endregion
+
     #region Component
     /// <summary>
     /// 输入组件
@@ -58,12 +77,16 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        ///创建状态机
+        ///初始化状态机
         stateMachine = new StateMachine();
-        //创建等待状态
+        //初始化等待状态
         idleState = new PlayerIdleState(this, playerData, stateMachine, "Idle");
-        //创建移动状态
-        moveState = new PlayerMoveState(this, playerData, stateMachine, "Move");
+        //初始化移动状态
+        moveState = new PlayerMoveState(this, playerData, stateMachine, "Move");  
+        //初始化跳跃状态
+        jumpState = new PlayerJumpState(this, playerData, stateMachine, "InAir");
+        //初始化空中状态
+        inAirState = new PlayerInAirState(this, playerData, stateMachine, "InAir");
     }
 
     // Start is called before the first frame update
@@ -108,6 +131,18 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 设置竖直方向速度 
+    /// </summary>
+    /// <param name="yVelocity"></param>
+    public void SetVelocityY(float yVelocity)
+    {
+        //保存设置速度
+        Temp = new Vector2(rb.velocity.x, yVelocity);
+        //给刚体设置速度
+        rb.velocity = CurrentVelocity = Temp;
+    }
+
+    /// <summary>
     /// 检测是否需要翻转
     /// </summary>
     /// <param name="xInput"></param>
@@ -119,6 +154,26 @@ public class Player : MonoBehaviour
             //翻转
             Flip();
         }
+    }
+
+    /// <summary>
+    /// 检测左脚是否在地面上
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckLeftFootIsGround()
+    {
+        //检测到返回true,否则返回false
+        return Physics2D.OverlapCircle(LetfFoot.position, playerData.GroundCheckRadius, playerData.GroundLayer);
+    }
+
+    /// <summary>
+    /// 检测右脚是否在地面上
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckRightFootIsGround()
+    {
+        //检测到返回true,否则返回false
+        return Physics2D.OverlapCircle(RightFoot.position, playerData.GroundCheckRadius, playerData.GroundLayer);
     }
 
     /// <summary>

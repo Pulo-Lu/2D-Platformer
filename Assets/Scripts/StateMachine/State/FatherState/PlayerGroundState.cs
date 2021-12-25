@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 玩家父类状态
+/// 玩家处在地面时的父类状态
 /// </summary>
 public class PlayerGroundState : PlayerState
 {
@@ -16,5 +16,19 @@ public class PlayerGroundState : PlayerState
     /// <param name="animBoolName">动画切换名称</param>
     public PlayerGroundState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
+    }
+
+    /// <summary>
+    /// 逻辑更新
+    /// </summary>
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        //跳跃
+        if (jumpInput)
+        {
+            //切换到跳跃状态
+            stateMachine.ChangeState(player.jumpState);
+        }
     }
 }
