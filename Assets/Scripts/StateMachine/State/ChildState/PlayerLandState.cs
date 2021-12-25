@@ -31,6 +31,7 @@ public class PlayerLandState : PlayerGroundState
             //切换到移动状态
             stateMachine.ChangeState(player.moveState);
         }
+        //动画播完
         else if (isAnimationFinish)
         {
             //切换到等待状态

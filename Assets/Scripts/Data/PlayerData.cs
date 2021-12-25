@@ -12,9 +12,14 @@ public class PlayerData : ScriptableObject
     //水平方向移动速度
     public float movementVelocity = 10;
 
+
     [Header("Jump State")]
     //竖直方向移动速度
     public float jumpVelocity = 20;
+
+    [Header("InAir State")]
+    //空中方向移动速度
+    public float movementInAir = 0.8f;
 
     [Header("Check Data")]
     //地面球形检测半径

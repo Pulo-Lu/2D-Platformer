@@ -61,7 +61,14 @@ public class PlayerInAirState : PlayerState
                 //切换到双脚落地状态
                 stateMachine.ChangeState(player.landState);
             }
-
+        }
+        //在空中
+        else
+        {
+            //可以翻转
+            player.CheckNeedFlip(xInput);
+            //
+            player.SetVelocityX(xInput * playerData.movementVelocity * playerData.movementInAir);
         }
 
     }

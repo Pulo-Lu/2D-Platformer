@@ -25,6 +25,17 @@ public class PlayerHardLandState : PlayerGroundState
     {
         base.LogicUpdate();
 
+        //左脚落地，右脚不落地
+        if (isLeftFootGround && !isRightFootGround)
+        {
+            player.animator.SetInteger("HardLandDir", 1);
+        }
+        //右脚落地，左脚不落地
+        else if (!isLeftFootGround && isRightFootGround)
+        {
+            player.animator.SetInteger("HardLandDir", -1);
+        }
+
         //水平方向输入不为0
         if (xInput != 0)
         {

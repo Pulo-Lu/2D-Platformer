@@ -8,6 +8,23 @@ using UnityEngine;
 public class PlayerGroundState : PlayerState
 {
     /// <summary>
+    /// 左脚是否落地
+    /// </summary>
+    protected bool isLeftFootGround;
+    /// <summary>
+    /// 右脚是否落地
+    /// </summary>
+    protected bool isRightFootGround;
+    /// <summary>
+    /// 是否一只脚落地
+    /// </summary>
+    protected bool isSingleFootGround;
+    /// <summary>
+    /// 是否为地面
+    /// </summary>
+    protected bool isGround;
+
+    /// <summary>
     /// 构造方法
     /// </summary>
     /// <param name="player">玩家脚本</param>
@@ -30,5 +47,27 @@ public class PlayerGroundState : PlayerState
             //切换到跳跃状态
             stateMachine.ChangeState(player.jumpState);
         }
+        //不在地面上
+        else if (!isGround)
+        {
+            //切换到空中状态
+            stateMachine.ChangeState(player.inAirState);
+        }
+    }
+
+    /// <summary>
+    /// 射线检测
+    /// </summary>
+    public override void OnCheck()
+    {
+        base.OnCheck();
+        //左脚是否落地
+        isLeftFootGround = player.CheckLeftFootIsGround();
+        //右脚是否落地
+        isRightFootGround = player.CheckRightFootIsGround();
+        //是否为地面
+        isGround = isLeftFootGround || isRightFootGround;
+        //是否一只脚落地
+        isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
     }
 }

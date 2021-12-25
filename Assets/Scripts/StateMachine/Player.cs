@@ -200,6 +200,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    ///动画结束 
+    /// </summary>
+    private void OnAnimationFinish()
+    {
+        //当前状态设置为动画播放完成
+        stateMachine.CurrentState.OnAnimationFinish();
+    }
+
+    /// <summary>
     /// 画圆
     /// </summary>
     private void OnDrawGizmos()
