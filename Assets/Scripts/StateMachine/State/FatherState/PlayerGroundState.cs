@@ -36,13 +36,24 @@ public class PlayerGroundState : PlayerState
     }
 
     /// <summary>
+    /// 进入状态
+    /// </summary>
+    public override void Enter()
+    {
+        base.Enter();
+
+        //重置跳跃次数
+        player.jumpState.ResetJumpCount();
+    }
+
+    /// <summary>
     /// 逻辑更新
     /// </summary>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        //跳跃
-        if (jumpInput)
+        //有跳跃输入 且 跳跃次数不为0
+        if (jumpInput && player.jumpState.CanJump())
         {
             //切换到跳跃状态
             stateMachine.ChangeState(player.jumpState);
