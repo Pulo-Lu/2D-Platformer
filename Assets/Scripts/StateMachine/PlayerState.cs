@@ -23,6 +23,7 @@ public class PlayerState
     /// 动画切换名
     /// </summary>
     protected string animBoolName;
+
     /// <summary>
     /// 限制水平方向输入
     /// </summary>
@@ -36,9 +37,18 @@ public class PlayerState
     /// </summary>
     protected bool jumpInput;
     /// <summary>
+    /// 是否上升过程中
+    /// </summary>
+    protected bool jumpInputStop;
+
+    /// <summary>
     /// 动画是否播放完成
     /// </summary>
     protected bool isAnimationFinish;
+    /// <summary>
+    /// 进入状态时的时间
+    /// </summary>
+    protected float stateEnterTime;
 
     /// <summary>
     /// 构造方法
@@ -62,6 +72,8 @@ public class PlayerState
     {
         //射线检测
         OnCheck();
+        //记录进入状态时的时间
+        stateEnterTime = Time.time;
         //设置播放动画
         player.animator.SetBool(animBoolName, true);
         //结束动画播放
@@ -79,6 +91,8 @@ public class PlayerState
         yInput = player.inputHandler.NormalInputY;
         //获取跳跃输入
         jumpInput = player.inputHandler.JumpInput;
+        //获取根据时间控制跳跃输入的开关
+        jumpInputStop = player.inputHandler.JumpInputStop;
     }
 
     /// <summary>

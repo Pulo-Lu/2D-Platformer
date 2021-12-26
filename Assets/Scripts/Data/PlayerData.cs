@@ -9,23 +9,42 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [Header("Move State")]
-    //水平方向移动速度
+    /// <summary>
+    /// 水平方向移动速度
+    /// </summary>
     public float movementVelocity = 10;
 
-
     [Header("Jump State")]
-    //竖直方向移动速度
+    /// <summary>
+    /// 竖直方向移动速度
+    /// </summary>
     public float jumpVelocity = 20;
-    //跳跃次数
+    /// <summary>
+    /// 跳跃次数
+    /// </summary>
     public int maxJumpCount = 2;
+    /// <summary>
+    /// 按键时间控制的跳跃高度
+    /// </summary>
+    public float jumpHeight = 0.5f;
+    /// <summary>
+    /// 跳跃的延迟时间
+    /// </summary>
+    public float jumpDelay = 0.2f;
 
     [Header("InAir State")]
-    //空中方向移动速度
+    /// <summary>
+    /// 空中方向移动速度
+    /// </summary>
     public float movementInAir = 0.8f;
 
     [Header("Check Data")]
-    //地面球形检测半径
+    /// <summary>
+    /// 地面球形检测半径
+    /// </summary>
     public float GroundCheckRadius = 0.1f;
-    //地面检测层级
+    /// <summary>
+    /// 地面检测层级
+    /// </summary>
     public LayerMask GroundLayer;
 }

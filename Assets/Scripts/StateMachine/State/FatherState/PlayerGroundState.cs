@@ -61,6 +61,8 @@ public class PlayerGroundState : PlayerState
         //不在地面上
         else if (!isGround)
         {
+            //设置可以延迟跳跃
+            player.inAirState.SetCanJumpDelay();
             //切换到空中状态
             stateMachine.ChangeState(player.inAirState);
         }

@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 10
   jumpVelocity: 20
+  maxJumpCount: 2
+  jumpHeight: 0.5
+  jumpDelay: 0.2
   movementInAir: 0.8
   GroundCheckRadius: 0.05
   GroundLayer:

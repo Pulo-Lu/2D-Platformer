@@ -21,6 +21,10 @@ public class PlayerInputHandler : MonoBehaviour
     /// 保存玩家跳跃输入
     /// </summary>
     public bool JumpInput { get; set; }
+    /// <summary>
+    /// 停止玩家跳跃输入，用于根据按键时间控制跳跃高度
+    /// </summary>
+    public bool JumpInputStop { get; private set; }
 
     /// <summary>
     /// 输入检测事件
@@ -46,6 +50,14 @@ public class PlayerInputHandler : MonoBehaviour
         {
             //跳跃
             JumpInput = true;
+            //开启根据按键时间控制的跳跃
+            JumpInputStop = false;
+        }
+        //松开按键
+        if (context.canceled)
+        {
+            //关闭根据按键时间控制的跳跃
+            JumpInputStop = true;
         }
     }
 

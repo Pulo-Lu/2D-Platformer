@@ -27,6 +27,14 @@ public class PlayerInAirState : PlayerState
     /// 是否为地面
     /// </summary>
     protected bool isGround;
+    /// <summary>
+    /// 是否上升过程中
+    /// </summary>
+    private bool isJumping;
+    /// <summary>
+    /// 是否可以延迟跳跃
+    /// </summary>
+    private bool canJumpDelay;
 
     /// <summary>
     /// 构造方法
@@ -45,6 +53,12 @@ public class PlayerInAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        //控制延迟跳跃
+        ControlJumpDelay();
+
+        //根据按键时间控制的跳跃高度
+        ControlJumpHeight();
 
         //有跳跃输入 且 跳跃次数不为0
         if (jumpInput && player.jumpState.CanJump())
@@ -101,4 +115,67 @@ public class PlayerInAirState : PlayerState
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
     }
 
+    /// <summary>
+    /// 设置处于上升过程中
+    /// </summary>
+    public void SetIsJump()
+    {
+        //上升过程中
+        isJumping = true;
+    }
+
+    /// <summary>
+    /// 根据按键时间控制的跳跃高度
+    /// </summary>
+    private void ControlJumpHeight()
+    {
+        //上升过程中
+        if (isJumping)
+        {
+            //时间控制跳跃输入的开关为启动
+            if (jumpInputStop)
+            {
+                //设置竖直移动速度
+                player.SetVelocityY(player.CurrentVelocity.y * playerData.jumpHeight);
+                //不在上升过程中
+                isJumping = false;
+
+                Debug.Log("时间控制跳跃且不为最高点");
+            }
+            //到达最高点
+            else if (Mathf.Abs(player.CurrentVelocity.y) < 0.1f)
+            { 
+                //不在上升过程中
+                isJumping = false;
+                Debug.Log("到达最高点");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 设置可以延迟跳跃
+    /// </summary>
+    public void SetCanJumpDelay()
+    {
+        //可以延迟跳跃
+        canJumpDelay = true;
+    }
+
+    /// <summary>
+    /// 控制延迟跳跃，使用延迟跳跃后，跳跃次数清0
+    /// </summary>
+    private void ControlJumpDelay()
+    {
+        //可以延迟跳跃
+        if (canJumpDelay)
+        {
+            Debug.Log("延迟跳跃");
+            //计算当前时间与进入状态时的时间差
+            if (Time.time - stateEnterTime >= playerData.jumpDelay)
+            {
+                //跳跃次数设置为0
+                player.jumpState.SetJumpCountZero();
+            }
+        }
+    }
 }
