@@ -25,6 +25,29 @@ public class PlayerInputHandler : MonoBehaviour
     /// 停止玩家跳跃输入，用于根据按键时间控制跳跃高度
     /// </summary>
     public bool JumpInputStop { get; private set; }
+    /// <summary>
+    /// 跳跃开始时间
+    /// </summary>
+    private float JumpInputStartTime;
+    [SerializeField]
+    /// <summary>
+    /// 跳跃延迟时间
+    /// </summary>
+    private float JumpInputHoldTime = 0.2f;
+
+    private void Update()
+    {
+        //有玩家跳跃输入
+        if (JumpInput)
+        {
+            //当前时间 与 跳跃开始时间 差 大于等于 跳跃延迟时间
+            if (Time.time - JumpInputStartTime >= JumpInputHoldTime)
+            {
+                //关闭玩家输入
+                JumpInput = false;
+            }
+        }
+    }
 
     /// <summary>
     /// 输入检测事件
@@ -52,6 +75,8 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInput = true;
             //开启根据按键时间控制的跳跃
             JumpInputStop = false;
+            //记录跳跃开始时间
+            JumpInputStartTime = Time.time;
         }
         //松开按键
         if (context.canceled)

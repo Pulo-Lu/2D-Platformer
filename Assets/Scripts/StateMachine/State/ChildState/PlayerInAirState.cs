@@ -170,7 +170,7 @@ public class PlayerInAirState : PlayerState
         if (canJumpDelay)
         {
             Debug.Log("延迟跳跃");
-            //计算当前时间与进入状态时的时间差
+            //当前时间 与 进入状态时的时间 差 大于等于 跳跃延迟时间
             if (Time.time - stateEnterTime >= playerData.jumpDelay)
             {
                 //跳跃次数设置为0
