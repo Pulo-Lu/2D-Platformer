@@ -17,6 +17,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public int NormalInputX { get; private set; }
     public int NormalInputY { get; private set; }
+
     /// <summary>
     /// 保存玩家跳跃输入
     /// </summary>
@@ -25,6 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// 停止玩家跳跃输入，用于根据按键时间控制跳跃高度
     /// </summary>
     public bool JumpInputStop { get; private set; }
+
     /// <summary>
     /// 跳跃开始时间
     /// </summary>
@@ -34,6 +36,11 @@ public class PlayerInputHandler : MonoBehaviour
     /// 跳跃延迟时间
     /// </summary>
     private float JumpInputHoldTime = 0.2f;
+
+    /// <summary>
+    /// 保存玩家抓墙输入
+    /// </summary>
+    public bool GrabInput { get; private set; }
 
     private void Update()
     {
@@ -57,7 +64,9 @@ public class PlayerInputHandler : MonoBehaviour
     {
         MovementInput = context.ReadValue<Vector2>();
         //默认输入灵敏度为0.5f  
-        //Mathf.RoundToInt(X)  X 的绝对值大于0.5f四舍五入为1, 小于0.5f四舍五入为0
+        //Mathf.RoundToInt(X)  X 的值大于0.5f四舍五入为1, 小于0.5f四舍五入为0
+        //返回 X 指定的值四舍五入到最近的整数
+        //如果数字末尾是.5，因此它是在两个整数中间，不管是偶数或是奇数，将返回偶数
         NormalInputX = Mathf.RoundToInt(MovementInput.x);
         NormalInputY = Mathf.RoundToInt(MovementInput.y);
     }
@@ -83,6 +92,26 @@ public class PlayerInputHandler : MonoBehaviour
         {
             //关闭根据按键时间控制的跳跃
             JumpInputStop = true;
+        }
+    }
+
+    /// <summary>
+    /// 玩家抓墙事件
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnGrabInput(InputAction.CallbackContext context)
+    {
+        //按下按键
+        if (context.started)
+        {
+            //抓墙
+            GrabInput = true;       
+        }
+        //松开按键
+        if (context.canceled)
+        {
+            //不抓墙
+            GrabInput = false;
         }
     }
 

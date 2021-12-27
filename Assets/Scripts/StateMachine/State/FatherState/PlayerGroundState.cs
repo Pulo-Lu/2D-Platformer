@@ -23,6 +23,10 @@ public class PlayerGroundState : PlayerState
     /// 是否为地面
     /// </summary>
     protected bool isGround;
+    /// <summary>
+    /// 是否接触到墙
+    /// </summary>
+    protected bool isTouchingWall;
 
     /// <summary>
     /// 构造方法
@@ -52,8 +56,15 @@ public class PlayerGroundState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        //有抓墙输入 且 接触到墙
+        if(grabInput && isTouchingWall)
+        {
+            //切换到抓着墙状态
+            stateMachine.ChangeState(player.wallGrabState);
+        }
         //有跳跃输入 且 跳跃次数不为0
-        if (jumpInput && player.jumpState.CanJump())
+        else if (jumpInput && player.jumpState.CanJump())
         {
             //切换到跳跃状态
             stateMachine.ChangeState(player.jumpState);
@@ -82,5 +93,7 @@ public class PlayerGroundState : PlayerState
         isGround = isLeftFootGround || isRightFootGround;
         //是否一只脚落地
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
+        //是否接触到墙
+        isTouchingWall = player.CheckIsTouchWall();
     }
 }

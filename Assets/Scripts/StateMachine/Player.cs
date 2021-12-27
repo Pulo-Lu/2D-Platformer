@@ -36,6 +36,20 @@ public class Player : MonoBehaviour
     /// 单脚落地状态
     /// </summary>
     public PlayerHardLandState hardLandState { get; private set; }
+    /// <summary>
+    /// 玩家抓着墙的状态
+    /// </summary>
+    public PlayerWallGrabState wallGrabState { get; private set; }
+    /// <summary>
+    /// 玩家抓着墙上爬的状态
+    /// </summary>
+    public PlayerWallClimbState wallClimbState { get; private set; }
+    /// /// <summary>
+    /// 玩家抓着墙下滑的状态
+    /// </summary>
+    public PlayerWallSlideState wallSlideState { get; private set; }
+
+
     #endregion
 
     #region Data
@@ -57,15 +71,20 @@ public class Player : MonoBehaviour
     public int FaceDir { get; private set; }
     #endregion
 
-    #region Transform
+    #region Check Transform
     /// <summary>
-    /// 玩家左脚 Transform
+    /// 检测玩家左脚 Transform
     /// </summary>
     public Transform LetfFoot;
     /// <summary>
-    /// 玩家右脚 Transform
+    /// 检测玩家右脚 Transform
     /// </summary>
     public Transform RightFoot;
+    /// <summary>
+    /// 检测墙面 Transform
+    /// </summary>
+    public Transform WallCheckCenter;
+
     #endregion
 
     #region Component
@@ -99,6 +118,12 @@ public class Player : MonoBehaviour
         landState = new PlayerLandState(this, playerData, stateMachine, "Land");
         //初始化单脚落地状态
         hardLandState = new PlayerHardLandState(this, playerData, stateMachine, "HardLand");
+        //初始化玩家抓着墙状态
+        wallGrabState = new PlayerWallGrabState(this, playerData, stateMachine, "WallGrab");
+        //初始化玩家抓着墙上爬状态
+        wallClimbState = new PlayerWallClimbState(this, playerData, stateMachine, "WallClimb");
+        //初始化玩家抓着墙下滑状态
+        wallSlideState = new PlayerWallSlideState(this, playerData, stateMachine, "WallSlide");
     }
 
     // Start is called before the first frame update
@@ -156,6 +181,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 设置速度为0 
+    /// </summary>
+    public void SetVelocityZero()
+    {
+        //给刚体设置速度
+        rb.velocity = CurrentVelocity = Vector2.zero;
+    }
+
+    /// <summary>
     /// 检测是否需要翻转
     /// </summary>
     /// <param name="xInput"></param>
@@ -190,6 +224,16 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 检测是否接触到墙面
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsTouchWall()
+    {
+        //检测到返回true,否则返回false
+        return Physics2D.Raycast(WallCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+    }
+
+    /// <summary>
     /// 翻转
     /// </summary>
     private void Flip()
@@ -218,5 +262,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(LetfFoot.position, playerData.GroundCheckRadius);
         //画出右脚的球形检测
         Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
+        //画出接触墙面的射线检测
+        Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * (transform.localEulerAngles.y>0?-1:1) * playerData.WallCheckLength);
     }
 }

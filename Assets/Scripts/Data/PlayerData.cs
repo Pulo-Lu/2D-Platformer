@@ -44,7 +44,12 @@ public class PlayerData : ScriptableObject
     /// </summary>
     public float GroundCheckRadius = 0.1f;
     /// <summary>
+    /// 射线检测墙面的长度
+    /// </summary>
+    public float WallCheckLength = 0.5f;
+    /// <summary>
     /// 地面检测层级
     /// </summary>
     public LayerMask GroundLayer;
+    
 }

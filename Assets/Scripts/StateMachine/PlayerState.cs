@@ -37,6 +37,10 @@ public class PlayerState
     /// </summary>
     protected bool jumpInput;
     /// <summary>
+    /// 抓墙输入
+    /// </summary>
+    protected bool grabInput;
+    /// <summary>
     /// 是否上升过程中
     /// </summary>
     protected bool jumpInputStop;
@@ -93,6 +97,8 @@ public class PlayerState
         jumpInput = player.inputHandler.JumpInput;
         //获取根据时间控制跳跃输入的开关
         jumpInputStop = player.inputHandler.JumpInputStop;
+        //获取抓墙输入
+        grabInput = player.inputHandler.GrabInput;
     }
 
     /// <summary>

@@ -35,6 +35,10 @@ public class PlayerInAirState : PlayerState
     /// 是否可以延迟跳跃
     /// </summary>
     private bool canJumpDelay;
+    /// <summary>
+    /// 是否接触到墙
+    /// </summary>
+    protected bool isTouchingWall;
 
     /// <summary>
     /// 构造方法
@@ -60,15 +64,20 @@ public class PlayerInAirState : PlayerState
         //根据按键时间控制的跳跃高度
         ControlJumpHeight();
 
+        //有抓墙输入 且 接触到墙
+        if (grabInput && isTouchingWall)
+        {
+            //切换到抓着墙状态
+            stateMachine.ChangeState(player.wallGrabState);
+        }
         //有跳跃输入 且 跳跃次数不为0
-        if (jumpInput && player.jumpState.CanJump())
+        else if (jumpInput && player.jumpState.CanJump())
         {
             //切换到跳跃状态
             stateMachine.ChangeState(player.jumpState);
         }
-
         //为地面 且 玩家竖直速度接近0
-        if (isGround && player.CurrentVelocity.y < 0.01f)
+        else if (isGround && player.CurrentVelocity.y < 0.01f)
         {
             //只有一只脚落地
             if (isSingleFootGround)
@@ -113,6 +122,8 @@ public class PlayerInAirState : PlayerState
         isGround = isLeftFootGround || isRightFootGround;
         //是否一只脚落地
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
+        //是否接触到墙
+        isTouchingWall = player.CheckIsTouchWall();
     }
 
     /// <summary>

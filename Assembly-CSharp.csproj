@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{13908DF1-B05C-4EB5-B561-C8F602095D73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -69,6 +70,10 @@
     <Compile Include="Assets\Scripts\Input\PlayerInputHandler.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerLandState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Player.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerTouchingWallState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallSlideState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallGrabState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallClimbState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
