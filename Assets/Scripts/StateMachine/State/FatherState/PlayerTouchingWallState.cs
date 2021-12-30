@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerTouchingWallState : PlayerState
 {
+    /// <summary>
+    /// 是否为地面
+    /// </summary>
     protected bool isGround;
 
     /// <summary>

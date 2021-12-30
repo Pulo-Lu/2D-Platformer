@@ -51,5 +51,15 @@ public class PlayerData : ScriptableObject
     /// 地面检测层级
     /// </summary>
     public LayerMask GroundLayer;
-    
+
+
+    [Header("Wall Data")]
+    /// <summary>
+    /// 抓着墙上爬的速度
+    /// </summary>
+    public float wallClimbVelocity = 3f;
+    /// <summary>
+    /// 抓着墙下滑的速度
+    /// </summary>
+    public float wallSlideVelocity = 5f;
 }

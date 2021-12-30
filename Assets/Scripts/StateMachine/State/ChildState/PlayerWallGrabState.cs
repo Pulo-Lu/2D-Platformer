@@ -41,6 +41,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         //抓着墙不动
         player.transform.position = grabPos;
         //TODO  体力系统  增加计时器可实现
+
         //设置速度为0
         player.SetVelocityZero();
 
