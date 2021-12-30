@@ -35,6 +35,13 @@ public class PlayerWallSlideState : PlayerTouchingWallState
             //切换到抓着墙的状态
             stateMachine.ChangeState(player.wallGrabState);
         }
+        //竖直输入为1 ：W
+        else if (yInput == 1)
+        {
+            //切换到上爬状态
+            stateMachine.ChangeState(player.wallClimbState);
+        }
+      
     }
 
 }
