@@ -34,6 +34,7 @@ public class PlayerLandState : PlayerGroundState
         //动画播完
         else if (isAnimationFinish)
         {
+            Debug.Log("12");
             //切换到等待状态
             stateMachine.ChangeState(player.idleState);
         }

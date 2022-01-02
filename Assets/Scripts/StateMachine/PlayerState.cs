@@ -127,6 +127,14 @@ public class PlayerState
     }
 
     /// <summary>
+    /// 动画事件
+    /// </summary>
+    public virtual void OnAnimationTrigger()
+    {
+    
+    }
+
+    /// <summary>
     ///动画结束 
     /// </summary>
     public virtual void OnAnimationFinish()

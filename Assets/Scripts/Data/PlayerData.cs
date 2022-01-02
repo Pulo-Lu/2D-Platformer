@@ -62,4 +62,14 @@ public class PlayerData : ScriptableObject
     /// 抓着墙下滑的速度
     /// </summary>
     public float wallSlideVelocity = 5f;
+
+    [Header("Ledge Climb Data")]
+    /// <summary>
+    /// 抓着墙角时相对于墙角的偏移量
+    /// </summary>
+    public Vector2 startOffset;
+    /// <summary>
+    /// 爬上墙角时相对于墙角的偏移量
+    /// </summary>
+    public Vector2 endOffset;
 }

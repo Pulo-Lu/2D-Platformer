@@ -39,6 +39,10 @@ public class PlayerInAirState : PlayerState
     /// 是否接触到墙
     /// </summary>
     protected bool isTouchingWall;
+    /// <summary>
+    /// 是否接触墙角
+    /// </summary>
+    protected bool isTouchingLedge;
 
     /// <summary>
     /// 构造方法
@@ -64,8 +68,14 @@ public class PlayerInAirState : PlayerState
         //根据按键时间控制的跳跃高度
         ControlJumpHeight();
 
+        //接触墙面 且 不接触墙角 且 不在地面
+        if(isTouchingWall && !isTouchingLedge && !isGround)
+        {
+            //切换到玩家在墙角的状态
+            stateMachine.ChangeState(player.LedgeClimbState);
+        }
         //有抓墙输入 且 接触到墙
-        if (grabInput && isTouchingWall)
+        else if (grabInput && isTouchingWall)
         {
             //切换到抓着墙状态
             stateMachine.ChangeState(player.wallGrabState);
@@ -124,6 +134,15 @@ public class PlayerInAirState : PlayerState
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
         //是否接触到墙
         isTouchingWall = player.CheckIsTouchWall();
+        //是否接触到墙角
+        isTouchingLedge = player.CheckIsTouchLedge();
+
+        //接触墙面 且 不接触墙角
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            //设置检测位置
+            player.LedgeClimbState.SetdetecedPos(player.transform.position);
+        }
     }
 
     /// <summary>

@@ -56,11 +56,15 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerTouchingWallState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerGroundState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallClimbState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerJumpState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallGrabState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerAbiilityState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallSlideState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerInAirState.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerHardLandState.cs" />
@@ -69,10 +73,7 @@
     <Compile Include="Assets\Scripts\Input\PlayerInputHandler.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerLandState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Player.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerTouchingWallState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallSlideState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallGrabState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallClimbState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerLedgeClimbState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

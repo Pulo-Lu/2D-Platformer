@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fall
+  m_Name: HoldLedge
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -2235766165625844132, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+      value: {fileID: 136918778597740633, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
     - time: 0.1
-      value: {fileID: 4523860181438593795, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+      value: {fileID: 4589052674970407492, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - time: 0.2
+      value: {fileID: 4428873918131890108, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - time: 0.3
+      value: {fileID: -5095616882519014388, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,14 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -2235766165625844132, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
-    - {fileID: 4523860181438593795, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - {fileID: 136918778597740633, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - {fileID: 4589052674970407492, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - {fileID: 4428873918131890108, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
+    - {fileID: -5095616882519014388, guid: d72d4585ee248ce41b5859cc74db5a7b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.2
+    m_StopTime: 0.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -69,8 +75,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.2
-    functionName: OnAnimationFinish
+  - time: 0
+    functionName: OnAnimationTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

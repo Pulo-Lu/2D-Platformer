@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 10
   jumpVelocity: 20
-  maxJumpCount: 2
+  maxJumpCount: 1
   jumpHeight: 0.5
   jumpDelay: 0.2
   movementInAir: 0.8
@@ -23,3 +23,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
+  wallClimbVelocity: 3
+  wallSlideVelocity: 5
+  startOffset: {x: -0.4, y: -0.9}
+  endOffset: {x: 0.4, y: 0.75}

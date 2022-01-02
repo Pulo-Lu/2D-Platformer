@@ -45,6 +45,7 @@ public class PlayerHardLandState : PlayerGroundState
         //动画播完
         else if (isAnimationFinish)
         {
+            Debug.Log("123");
             //切换到等待状态
             stateMachine.ChangeState(player.idleState);
         }

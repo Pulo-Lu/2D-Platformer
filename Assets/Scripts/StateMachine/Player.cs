@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
     /// 玩家抓着墙下滑的状态
     /// </summary>
     public PlayerWallSlideState wallSlideState { get; private set; }
+    /// <summary>
+    /// 玩家在墙角的状态
+    /// </summary>
+    public PlayerLedgeClimbState LedgeClimbState { get; private set; }
 
 
     #endregion
@@ -84,6 +88,11 @@ public class Player : MonoBehaviour
     /// 检测墙面 Transform
     /// </summary>
     public Transform WallCheckCenter;
+    /// <summary>
+    /// 检测墙角 Transform
+    /// </summary>
+    public Transform LedgeCheckCenter;
+
 
     #endregion
 
@@ -124,6 +133,8 @@ public class Player : MonoBehaviour
         wallClimbState = new PlayerWallClimbState(this, playerData, stateMachine, "WallClimb");
         //初始化玩家抓着墙下滑状态
         wallSlideState = new PlayerWallSlideState(this, playerData, stateMachine, "WallSlide");
+        //初始化玩家在墙角的状态
+        LedgeClimbState = new PlayerLedgeClimbState(this, playerData, stateMachine, "LedgeClimb");
     }
 
     // Start is called before the first frame update
@@ -234,6 +245,16 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 检测是否接触到墙角
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsTouchLedge()
+    {
+        //检测到返回true,否则返回false
+        return Physics2D.Raycast(LedgeCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+    }
+
+    /// <summary>
     /// 翻转
     /// </summary>
     private void Flip()
@@ -242,6 +263,30 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
         //改变玩家面向方向
         FaceDir = -FaceDir;
+    }
+
+    /// <summary>
+    /// 计算墙角位置
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 CalculateCorner()
+    {
+        //获取从 检测墙面 Transform 发射到墙面的射线 ；射线与墙面接触x值即为墙角x坐标
+        RaycastHit2D hit_x = Physics2D.Raycast(WallCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+        //计算  检测点
+        Vector2 yCenter = new Vector2(WallCheckCenter.position.x + (hit_x.distance + 0.015f) * FaceDir, LedgeCheckCenter.position.y);
+        //获取从 检测点 向下发射到墙面的射线 ；射线与墙面接触y值即为墙角y坐标
+        RaycastHit2D hit_y = Physics2D.Raycast(yCenter, Vector2.down, LedgeCheckCenter.position.y - WallCheckCenter.position.y, playerData.GroundLayer);
+        //返回墙角坐标
+        return new Vector2(WallCheckCenter.position.x + hit_x.distance * FaceDir, LedgeCheckCenter.position.y - hit_y.distance);
+    }
+
+    /// <summary>
+    /// 动画事件
+    /// </summary>
+    private void OnAnimationTrigger()
+    {
+        stateMachine.CurrentState.OnAnimationTrigger();
     }
 
     /// <summary>
@@ -264,5 +309,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
         //画出接触墙面的射线检测
         Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * (transform.localEulerAngles.y>0?-1:1) * playerData.WallCheckLength);
+        //画出接触墙角的射线检测
+        Gizmos.DrawLine(LedgeCheckCenter.position, LedgeCheckCenter.position + Vector3.right * (transform.localEulerAngles.y > 0 ? -1 : 1) * playerData.WallCheckLength);
     }
 }
