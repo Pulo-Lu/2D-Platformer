@@ -13,6 +13,11 @@ public class StateMachine
     public PlayerState CurrentState { get; private set; }
 
     /// <summary>
+    /// 上个状态
+    /// </summary>
+    public PlayerState LastState { get; private set; }
+
+    /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="InitState"></param>
@@ -32,6 +37,8 @@ public class StateMachine
     {
         //退出状态
         CurrentState.Exit();
+        //将当前记录为上个状态
+        LastState = CurrentState;
         //将当前状态设置为下一状态
         CurrentState = nextState;
         //进入当前状态
