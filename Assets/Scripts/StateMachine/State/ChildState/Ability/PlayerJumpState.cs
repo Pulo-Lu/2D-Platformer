@@ -31,10 +31,22 @@ public class PlayerJumpState : PlayerAbiilityState
     {
  
         base.Enter();
+
         //跳跃键已经按下，设置false
         player.inputHandler.JumpInput = false;
-        //设置竖直移动速度
-        player.SetVelocityY(playerData.jumpVelocity);
+
+        //上个状态为蹲下等待状态或者蹲下移动状态
+        if(stateMachine.LastState == player.CrouchIdleState || stateMachine.LastState == player.CrouchMoveState)
+        {
+            //设置竖直移动速度
+            player.SetVelocityY(playerData.jumpVelocity * playerData.CrouchJump);
+        }
+        else
+        {
+            //设置竖直移动速度
+            player.SetVelocityY(playerData.jumpVelocity);
+        }
+   
         //切换能力行为
         isAbilityDone = true;
         //进入状态时设置为上升过程中
