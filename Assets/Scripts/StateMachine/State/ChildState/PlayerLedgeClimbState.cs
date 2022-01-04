@@ -102,9 +102,14 @@ public class PlayerLedgeClimbState : PlayerState
         player.SetVelocityZero();
         //将玩家位置设置为爬墙开始位置
         player.transform.position = startPos;
-
+        //动画结束
+        if (isAnimationFinish)
+        {
+            //切换到等待状态
+            stateMachine.ChangeState(player.idleState);
+        }
         //抓着墙角 且 没有攀爬
-        if (isHolding && !isClimbing)
+        else if (isHolding && !isClimbing)
         {
             //水平输入 为 玩家面向方向
             if (xInput == player.FaceDir)
@@ -139,12 +144,10 @@ public class PlayerLedgeClimbState : PlayerState
     {
         base.OnAnimationFinish();
 
-        Debug.Log("1");
         //设置攀爬动画
         player.animator.SetBool("ClimbLedge", false);
-
-        //切换到等待状态
-        stateMachine.ChangeState(player.idleState);
+        //动画结束
+        isAnimationFinish = true;
     }
 
 }

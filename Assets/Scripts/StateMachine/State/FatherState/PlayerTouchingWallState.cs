@@ -41,8 +41,14 @@ public class PlayerTouchingWallState : PlayerState
         //接触墙面 且 不接触墙角 且 不在地面
         if (isTouchingWall && !isTouchingLedge && !isGround)
         {
-            //切换到玩家在墙角的状态
-            stateMachine.ChangeState(player.LedgeClimbState);
+            //再次判断是否在地面上
+            isGround = player.CheckLeftFootIsGround() || player.CheckRightFootIsGround();
+            //不在地面上
+            if (!isGround)
+            {
+                //切换到玩家在墙角的状态
+                stateMachine.ChangeState(player.LedgeClimbState);
+            }
         }
         //不抓墙
         else if (!grabInput)
