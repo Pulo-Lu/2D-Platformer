@@ -294,7 +294,9 @@ public class Player : MonoBehaviour
     public bool CheckIsTouchCeiling()
     {
         //检测到返回true,否则返回false
-        return Physics2D.OverlapCircle(CeilingCheckCenter.position, playerData.CeilingCheckRadius, playerData.GroundLayer);
+        //return Physics2D.OverlapCircle(CeilingCheckCenter.position, playerData.CeilingCheckRadius, playerData.GroundLayer);
+        //射线检测
+        return Physics2D.Raycast(CeilingCheckCenter.position, Vector2.up, playerData.CeilingCheckRadius, playerData.GroundLayer);
     }
 
     /// <summary>
@@ -351,11 +353,16 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(LetfFoot.position, playerData.GroundCheckRadius);
         //画出右脚的球形检测
         Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
+
         //画出头顶的球形检测
-        Gizmos.DrawWireSphere(CeilingCheckCenter.position, playerData.CeilingCheckRadius);
+        //Gizmos.DrawWireSphere(CeilingCheckCenter.position, playerData.CeilingCheckRadius);
+
         //画出接触墙面的射线检测
-        Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * (transform.localEulerAngles.y>0?-1:1) * playerData.WallCheckLength);
+        Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * FaceDir * playerData.WallCheckLength);
         //画出接触墙角的射线检测
-        Gizmos.DrawLine(LedgeCheckCenter.position, LedgeCheckCenter.position + Vector3.right * (transform.localEulerAngles.y > 0 ? -1 : 1) * playerData.WallCheckLength);
+        Gizmos.DrawLine(LedgeCheckCenter.position, LedgeCheckCenter.position + Vector3.right * FaceDir * playerData.WallCheckLength);
+        //画出头顶接触墙的射线检测
+        Gizmos.DrawLine(CeilingCheckCenter.position,(Vector2)CeilingCheckCenter.position + Vector2.up * playerData.CeilingCheckRadius);
+
     }
 }

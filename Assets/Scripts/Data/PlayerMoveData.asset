@@ -21,7 +21,7 @@ MonoBehaviour:
   jumpDelay: 0.2
   movementInAir: 0.8
   GroundCheckRadius: 0.05
-  CeilingCheckRadius: 0.25
+  CeilingCheckRadius: 0.8
   WallCheckLength: 0.4
   GroundLayer:
     serializedVersion: 2
