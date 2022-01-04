@@ -24,7 +24,7 @@ public class PlayerData : ScriptableObject
     /// </summary>
     public int maxJumpCount = 2;
     /// <summary>
-    /// 按键时间控制的跳跃高度
+    /// 按键时间控制的跳跃高度系数
     /// </summary>
     public float jumpHeight = 0.5f;
     /// <summary>
@@ -78,4 +78,8 @@ public class PlayerData : ScriptableObject
     /// 蹲下时水平方向移动速度
     /// </summary>
     public float CrouchVelocity = 5f;
+    /// <summary>
+    /// 蹲下时起跳高度系数
+    /// </summary>
+    public float CrouchJump = 1.5f;
 }
