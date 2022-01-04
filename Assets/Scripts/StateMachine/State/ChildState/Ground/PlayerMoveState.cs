@@ -30,11 +30,23 @@ public class PlayerMoveState : PlayerGroundState
         //设置水平移动速度
         player.SetVelocityX(playerData.movementVelocity * xInput);
 
+        //竖直输入为 -1 即 按下S
+        if (yInput == -1)
+        {
+            //切换到蹲下等待状态
+            stateMachine.ChangeState(player.CrouchIdleState);
+        }
+        //单脚落地
+        else if (isSingleFootGround)
+        {
+            //切换到单脚落地状态
+            stateMachine.ChangeState(player.HardLandState);
+        }
         //水平输入为0
-        if (xInput == 0)
+        else if (xInput == 0)
         {
             //切换到等待状态
-            stateMachine.ChangeState(player.idleState);
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 

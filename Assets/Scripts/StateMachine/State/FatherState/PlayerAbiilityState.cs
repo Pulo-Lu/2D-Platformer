@@ -65,13 +65,13 @@ public class PlayerAbiilityState : PlayerState
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
                 //切换到等待状态
-                stateMachine.ChangeState(player.idleState);
+                stateMachine.ChangeState(player.IdleState);
             }
             //不是地面
             else
             {
                 //切换到空中状态
-                stateMachine.ChangeState(player.inAirState);
+                stateMachine.ChangeState(player.InAirState);
             }
         }
     }

@@ -106,7 +106,7 @@ public class PlayerLedgeClimbState : PlayerState
         if (isAnimationFinish)
         {
             //切换到等待状态
-            stateMachine.ChangeState(player.idleState);
+            stateMachine.ChangeState(player.IdleState);
         }
         //抓着墙角 且 没有攀爬
         else if (isHolding && !isClimbing)
@@ -119,11 +119,11 @@ public class PlayerLedgeClimbState : PlayerState
                 //设置攀爬动画
                 player.animator.SetBool("ClimbLedge", true);
             }
-            //竖直输入为 -1 即 按下W
+            //竖直输入为 -1 即 按下S
             else if (yInput == -1)
             {
                 //切换到玩家在空中的状态
-                stateMachine.ChangeState(player.inAirState);
+                stateMachine.ChangeState(player.InAirState);
             }
         }
     }

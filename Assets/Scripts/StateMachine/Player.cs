@@ -15,44 +15,51 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 玩家等待状态
     /// </summary>
-    public PlayerIdleState idleState { get; private set; }
+    public PlayerIdleState IdleState { get; private set; }
     /// <summary>
     /// 玩家移动状态
     /// </summary>
-    public PlayerMoveState moveState { get; private set; }
+    public PlayerMoveState MoveState { get; private set; }
     /// <summary>
     /// 玩家跳跃状态
     /// </summary>
-    public PlayerJumpState jumpState { get; private set; }
+    public PlayerJumpState JumpState { get; private set; }
     /// <summary>
     /// 玩家空中状态
     /// </summary>
-    public PlayerInAirState inAirState { get; private set; }
+    public PlayerInAirState InAirState { get; private set; }
     /// <summary>
     /// 正常落地状态（双脚落地）
     /// </summary>
-    public PlayerLandState landState { get; private set; }
+    public PlayerLandState LandState { get; private set; }
     /// <summary>
     /// 单脚落地状态
     /// </summary>
-    public PlayerHardLandState hardLandState { get; private set; }
+    public PlayerHardLandState HardLandState { get; private set; }
     /// <summary>
     /// 玩家抓着墙的状态
     /// </summary>
-    public PlayerWallGrabState wallGrabState { get; private set; }
+    public PlayerWallGrabState WallGrabState { get; private set; }
     /// <summary>
     /// 玩家抓着墙上爬的状态
     /// </summary>
-    public PlayerWallClimbState wallClimbState { get; private set; }
+    public PlayerWallClimbState WallClimbState { get; private set; }
     /// /// <summary>
     /// 玩家抓着墙下滑的状态
     /// </summary>
-    public PlayerWallSlideState wallSlideState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
     /// <summary>
     /// 玩家在墙角的状态
     /// </summary>
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
-
+    /// <summary>
+    /// 玩家蹲下等待的状态
+    /// </summary>
+    public PlayerCrouchIdleState CrouchIdleState { get; private set; }
+    /// <summary>
+    /// 玩家蹲下移动的状态
+    /// </summary>
+    public PlayerCrouchMoveState CrouchMoveState { get; private set; }
 
     #endregion
 
@@ -116,25 +123,29 @@ public class Player : MonoBehaviour
         ///初始化状态机
         stateMachine = new StateMachine();
         //初始化等待状态
-        idleState = new PlayerIdleState(this, playerData, stateMachine, "Idle");
+        IdleState = new PlayerIdleState(this, playerData, stateMachine, "Idle");
         //初始化移动状态
-        moveState = new PlayerMoveState(this, playerData, stateMachine, "Move");  
+        MoveState = new PlayerMoveState(this, playerData, stateMachine, "Move");  
         //初始化跳跃状态
-        jumpState = new PlayerJumpState(this, playerData, stateMachine, "InAir");
+        JumpState = new PlayerJumpState(this, playerData, stateMachine, "InAir");
         //初始化空中状态
-        inAirState = new PlayerInAirState(this, playerData, stateMachine, "InAir");
+        InAirState = new PlayerInAirState(this, playerData, stateMachine, "InAir");
         //初始化正常落地状态
-        landState = new PlayerLandState(this, playerData, stateMachine, "Land");
+        LandState = new PlayerLandState(this, playerData, stateMachine, "Land");
         //初始化单脚落地状态
-        hardLandState = new PlayerHardLandState(this, playerData, stateMachine, "HardLand");
+        HardLandState = new PlayerHardLandState(this, playerData, stateMachine, "HardLand");
         //初始化玩家抓着墙状态
-        wallGrabState = new PlayerWallGrabState(this, playerData, stateMachine, "WallGrab");
+        WallGrabState = new PlayerWallGrabState(this, playerData, stateMachine, "WallGrab");
         //初始化玩家抓着墙上爬状态
-        wallClimbState = new PlayerWallClimbState(this, playerData, stateMachine, "WallClimb");
+        WallClimbState = new PlayerWallClimbState(this, playerData, stateMachine, "WallClimb");
         //初始化玩家抓着墙下滑状态
-        wallSlideState = new PlayerWallSlideState(this, playerData, stateMachine, "WallSlide");
+        WallSlideState = new PlayerWallSlideState(this, playerData, stateMachine, "WallSlide");
         //初始化玩家在墙角的状态
         LedgeClimbState = new PlayerLedgeClimbState(this, playerData, stateMachine, "LedgeClimb");
+        //初始化玩家蹲下等待的状态
+        CrouchIdleState = new PlayerCrouchIdleState(this, playerData, stateMachine, "CrouchIdle");
+        //初始化玩家蹲下移动的状态
+        CrouchMoveState = new PlayerCrouchMoveState(this, playerData, stateMachine, "CrouchMove");
     }
 
     // Start is called before the first frame update
@@ -147,7 +158,7 @@ public class Player : MonoBehaviour
         //获取 刚体 组件
         rb = GetComponent<Rigidbody2D>();
         //状态机初始化
-        stateMachine.Init(idleState);
+        stateMachine.Init(IdleState);
 
         //玩家面向右
         FaceDir = 1;
@@ -206,7 +217,7 @@ public class Player : MonoBehaviour
     /// <param name="xInput"></param>
     public void CheckNeedFlip(int xInput)
     {
-        //有输入且玩家面向不为右
+        //有输入 且 玩家面向不为右
         if (xInput != 0 && xInput != FaceDir) 
         {
             //翻转

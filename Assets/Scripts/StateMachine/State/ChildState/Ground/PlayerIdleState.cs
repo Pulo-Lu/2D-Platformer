@@ -18,11 +18,15 @@ public class PlayerIdleState : PlayerGroundState
     {
     }
 
+    /// <summary>
+    /// 进入状态
+    /// </summary>
     public override void Enter()
     {
         base.Enter();
 
-        player.SetVelocityX(0);
+        //设置速度为0
+        player.SetVelocityZero();
     }
 
     /// <summary>
@@ -32,11 +36,23 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.LogicUpdate();
 
+        //竖直输入为 -1 即 按下S
+        if (yInput == -1)
+        {
+            //切换到蹲下等待状态
+            stateMachine.ChangeState(player.CrouchIdleState);
+        }
+        //单脚落地
+        else if (isSingleFootGround)
+        {
+            //切换到单脚落地状态
+            stateMachine.ChangeState(player.HardLandState);
+        }
         //水平输入不为0
-        if (xInput != 0) 
+        else if (xInput != 0) 
         {
             //切换到移动状态
-            stateMachine.ChangeState(player.moveState);
+            stateMachine.ChangeState(player.MoveState);
         }
     }
 

@@ -38,7 +38,7 @@ public class PlayerJumpState : PlayerAbiilityState
         //切换能力行为
         isAbilityDone = true;
         //进入状态时设置为上升过程中
-        player.inAirState.SetIsJump();
+        player.InAirState.SetIsJump();
         //跳跃次数减一
         jumpCounter--;
     }

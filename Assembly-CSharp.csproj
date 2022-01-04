@@ -58,22 +58,24 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerTouchingWallState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerGroundState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallClimbState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Wall\PlayerWallClimbState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerJumpState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallGrabState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerJumpState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Wall\PlayerWallGrabState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerAbiilityState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerWallSlideState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerInAirState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Wall\PlayerWallSlideState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Climb\PlayerLedgeClimbState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\FatherState\PlayerInAirState.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerHardLandState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerHardLandState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\PlayerState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerMoveState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\Input\PlayerInputHandler.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerLandState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerLandState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Player.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\PlayerLedgeClimbState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerCrouchIdleState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerCrouchMoveState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -735,6 +737,12 @@
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

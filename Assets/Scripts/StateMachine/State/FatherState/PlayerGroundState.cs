@@ -47,7 +47,7 @@ public class PlayerGroundState : PlayerState
         base.Enter();
 
         //重置跳跃次数
-        player.jumpState.ResetJumpCount();
+        player.JumpState.ResetJumpCount();
     }
 
     /// <summary>
@@ -61,21 +61,21 @@ public class PlayerGroundState : PlayerState
         if(grabInput && isTouchingWall)
         {
             //切换到抓着墙状态
-            stateMachine.ChangeState(player.wallGrabState);
+            stateMachine.ChangeState(player.WallGrabState);
         }
         //有跳跃输入 且 跳跃次数不为0
-        else if (jumpInput && player.jumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump())
         {
             //切换到跳跃状态
-            stateMachine.ChangeState(player.jumpState);
+            stateMachine.ChangeState(player.JumpState);
         }
         //不在地面上
         else if (!isGround)
         {
             //设置可以延迟跳跃
-            player.inAirState.SetCanJumpDelay();
+            player.InAirState.SetCanJumpDelay();
             //切换到空中状态
-            stateMachine.ChangeState(player.inAirState);
+            stateMachine.ChangeState(player.InAirState);
         }
     }
 

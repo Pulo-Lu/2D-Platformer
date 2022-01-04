@@ -57,13 +57,13 @@ public class PlayerTouchingWallState : PlayerState
             if (isGround)
             {
                 //切换到等待状态
-                stateMachine.ChangeState(player.idleState);
+                stateMachine.ChangeState(player.IdleState);
             }
             //不为地面
             else
             {
                 //切换到空中状态
-                stateMachine.ChangeState(player.inAirState);
+                stateMachine.ChangeState(player.InAirState);
             }
         }
     }

@@ -72,4 +72,10 @@ public class PlayerData : ScriptableObject
     /// 爬上墙角时相对于墙角的偏移量
     /// </summary>
     public Vector2 endOffset;
+
+    [Header("Crouch Data")]
+    /// <summary>
+    /// 蹲下时水平方向移动速度
+    /// </summary>
+    public float CrouchVelocity = 5f;
 }

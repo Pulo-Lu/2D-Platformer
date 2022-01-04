@@ -84,13 +84,13 @@ public class PlayerInAirState : PlayerState
         else if (grabInput && isTouchingWall)
         {
             //切换到抓着墙状态
-            stateMachine.ChangeState(player.wallGrabState);
+            stateMachine.ChangeState(player.WallGrabState);
         }
         //有跳跃输入 且 跳跃次数不为0
-        else if (jumpInput && player.jumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump())
         {
             //切换到跳跃状态
-            stateMachine.ChangeState(player.jumpState);
+            stateMachine.ChangeState(player.JumpState);
         }
         //为地面 且 玩家竖直速度接近0
         else if (isGround && player.CurrentVelocity.y < 0.01f)
@@ -98,20 +98,22 @@ public class PlayerInAirState : PlayerState
             //只有一只脚落地
             if (isSingleFootGround)
             {
+                //Debug.Log("单脚落地");
                 //切换到单脚落地状态
-                stateMachine.ChangeState(player.hardLandState);
+                stateMachine.ChangeState(player.HardLandState);
             }
             //双脚落地
             else
             {
+                //Debug.Log("双脚落地");
                 //切换到双脚落地状态
-                stateMachine.ChangeState(player.landState);
+                stateMachine.ChangeState(player.LandState);
             }
         }
         //在空中
         else
         {
-            //可以翻转
+            //检测是否需要翻转
             player.CheckNeedFlip(xInput);
             //设置水平方向速度 
             player.SetVelocityX(xInput * playerData.movementVelocity * playerData.movementInAir);
@@ -209,7 +211,7 @@ public class PlayerInAirState : PlayerState
             if (Time.time - stateEnterTime >= playerData.jumpDelay)
             {
                 //跳跃次数设置为0
-                player.jumpState.SetJumpCountZero();
+                player.JumpState.SetJumpCountZero();
             }
         }
     }

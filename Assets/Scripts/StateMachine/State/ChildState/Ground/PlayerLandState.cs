@@ -29,14 +29,15 @@ public class PlayerLandState : PlayerGroundState
         if (xInput != 0)
         {
             //切换到移动状态
-            stateMachine.ChangeState(player.moveState);
+            stateMachine.ChangeState(player.MoveState);
         }
         //动画播完
-        else if (isAnimationFinish)
+        //else if (isAnimationFinish) TODO:没做落地时的缓冲动画
+        else if(isGround)
         {
-            Debug.Log("12");
+            //Debug.Log("双脚落地转等待状态");
             //切换到等待状态
-            stateMachine.ChangeState(player.idleState);
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 
