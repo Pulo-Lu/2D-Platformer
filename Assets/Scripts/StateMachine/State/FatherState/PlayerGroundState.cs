@@ -27,6 +27,10 @@ public class PlayerGroundState : PlayerState
     /// 是否接触到墙
     /// </summary>
     protected bool isTouchingWall;
+    /// <summary>
+    /// 蹲下检测头顶是否接触到墙
+    /// </summary>
+    protected bool isTouchingCeiling;
 
     /// <summary>
     /// 构造方法
@@ -95,5 +99,7 @@ public class PlayerGroundState : PlayerState
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
         //是否接触到墙
         isTouchingWall = player.CheckIsTouchWall();
+        //蹲下检测头顶是否接触到墙
+        isTouchingCeiling = player.CheckIsTouchCeiling();
     }
 }

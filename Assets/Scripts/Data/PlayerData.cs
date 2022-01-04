@@ -13,6 +13,14 @@ public class PlayerData : ScriptableObject
     /// 水平方向移动速度
     /// </summary>
     public float movementVelocity = 10;
+    /// <summary>
+    /// 站立时碰撞盒位置
+    /// </summary>
+    public Vector2 StandColliderOffset;
+    /// <summary>
+    /// 站立时碰撞盒大小
+    /// </summary>
+    public Vector2 StandColliderSize;
 
     [Header("Jump State")]
     /// <summary>
@@ -43,6 +51,10 @@ public class PlayerData : ScriptableObject
     /// 地面球形检测半径
     /// </summary>
     public float GroundCheckRadius = 0.1f;
+    /// <summary>
+    /// 头顶球形检测半径
+    /// </summary>
+    public float CeilingCheckRadius = 0.25f;
     /// <summary>
     /// 射线检测墙面的长度
     /// </summary>
@@ -82,4 +94,12 @@ public class PlayerData : ScriptableObject
     /// 蹲下时起跳高度系数
     /// </summary>
     public float CrouchJump = 1.5f;
+    /// <summary>
+    /// 蹲下时碰撞盒位置
+    /// </summary>
+    public Vector2 CrouchColliderOffset;
+    /// <summary>
+    /// 蹲下时碰撞盒大小
+    /// </summary>
+    public Vector2 CrouchColliderSize;
 }

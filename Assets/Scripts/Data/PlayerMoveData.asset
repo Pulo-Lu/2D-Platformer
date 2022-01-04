@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: PlayerMoveData
   m_EditorClassIdentifier: 
   movementVelocity: 10
+  StandColliderOffset: {x: 0, y: -0.2}
+  StandColliderSize: {x: 0.7, y: 1.7}
   jumpVelocity: 20
   maxJumpCount: 1
   jumpHeight: 0.5
   jumpDelay: 0.2
   movementInAir: 0.8
   GroundCheckRadius: 0.05
+  CeilingCheckRadius: 0.25
   WallCheckLength: 0.4
   GroundLayer:
     serializedVersion: 2
@@ -27,3 +30,7 @@ MonoBehaviour:
   wallSlideVelocity: 5
   startOffset: {x: -0.4, y: -0.9}
   endOffset: {x: 0.4, y: 0.75}
+  CrouchVelocity: 5
+  CrouchJump: 1.5
+  CrouchColliderOffset: {x: 0.05, y: -0.6}
+  CrouchColliderSize: {x: 0.7, y: 0.9}

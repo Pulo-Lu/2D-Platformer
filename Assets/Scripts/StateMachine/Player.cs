@@ -99,7 +99,10 @@ public class Player : MonoBehaviour
     /// 检测墙角 Transform
     /// </summary>
     public Transform LedgeCheckCenter;
-
+    /// <summary>
+    /// 检测头顶 Transform
+    /// </summary>
+    public Transform CeilingCheckCenter;
 
     #endregion
 
@@ -116,6 +119,10 @@ public class Player : MonoBehaviour
     /// 刚体组件
     /// </summary>
     public Rigidbody2D rb { get; private set; }
+    /// <summary>
+    /// 碰撞盒组件
+    /// </summary>
+    private BoxCollider2D box;
     #endregion
 
     private void Awake()
@@ -157,6 +164,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         //获取 刚体 组件
         rb = GetComponent<Rigidbody2D>();
+        //获取 碰撞盒 组件
+        box = GetComponent<BoxCollider2D>();
         //状态机初始化
         stateMachine.Init(IdleState);
 
@@ -209,6 +218,19 @@ public class Player : MonoBehaviour
     {
         //给刚体设置速度
         rb.velocity = CurrentVelocity = Vector2.zero;
+    }
+
+    /// <summary>
+    /// 设置碰撞盒参数
+    /// </summary>
+    /// <param name="offset">位置</param>
+    /// <param name="size">大小</param>
+    public void SetBoxColliderData(Vector2 offset, Vector2 size)
+    {
+        //设置位置
+        box.offset = offset;
+        //设置大小
+        box.size = size;
     }
 
     /// <summary>
@@ -266,6 +288,16 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 蹲下检测头顶是否接触到墙
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsTouchCeiling()
+    {
+        //检测到返回true,否则返回false
+        return Physics2D.OverlapCircle(CeilingCheckCenter.position, playerData.CeilingCheckRadius, playerData.GroundLayer);
+    }
+
+    /// <summary>
     /// 翻转
     /// </summary>
     private void Flip()
@@ -297,6 +329,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void OnAnimationTrigger()
     {
+        //动画事件触发
         stateMachine.CurrentState.OnAnimationTrigger();
     }
 
@@ -305,7 +338,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void OnAnimationFinish()
     {
-        //当前状态设置为动画播放完成
+        //动画播放完成
         stateMachine.CurrentState.OnAnimationFinish();
     }
 
@@ -318,6 +351,8 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(LetfFoot.position, playerData.GroundCheckRadius);
         //画出右脚的球形检测
         Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
+        //画出头顶的球形检测
+        Gizmos.DrawWireSphere(CeilingCheckCenter.position, playerData.CeilingCheckRadius);
         //画出接触墙面的射线检测
         Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * (transform.localEulerAngles.y>0?-1:1) * playerData.WallCheckLength);
         //画出接触墙角的射线检测

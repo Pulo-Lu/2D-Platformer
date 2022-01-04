@@ -19,6 +19,18 @@ public class PlayerCrouchMoveState : PlayerGroundState
     }
 
     /// <summary>
+    /// 进入状态
+    /// </summary>
+    public override void Enter()
+    {
+        base.Enter();
+
+        //设置蹲下时的碰撞盒
+        player.SetBoxColliderData(playerData.CrouchColliderOffset, playerData.CrouchColliderSize);
+
+    }
+
+    /// <summary>
     /// 逻辑更新
     /// </summary>
     public override void LogicUpdate()
@@ -31,13 +43,13 @@ public class PlayerCrouchMoveState : PlayerGroundState
         player.SetVelocityX(xInput * playerData.CrouchVelocity);
 
         //没有水平输入
-        if(xInput == 0)
+        if (xInput == 0)
         {
             //切换到蹲下等待状态
             stateMachine.ChangeState(player.CrouchIdleState);
         }
-        //竖直输入不为 -1 即 松开S
-        else if (yInput != -1)
+        //竖直输入不为 -1 即 松开S且 头顶没有接触墙
+        else if (yInput != -1 && !isTouchingCeiling) 
         {
             //切换到移动状态
             stateMachine.ChangeState(player.MoveState);

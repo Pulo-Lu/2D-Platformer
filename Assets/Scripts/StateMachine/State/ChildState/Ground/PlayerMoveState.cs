@@ -19,6 +19,17 @@ public class PlayerMoveState : PlayerGroundState
     }
 
     /// <summary>
+    /// 进入状态
+    /// </summary>
+    public override void Enter()
+    {
+        base.Enter();
+
+        //设置站立时的碰撞盒
+        player.SetBoxColliderData(playerData.StandColliderOffset, playerData.StandColliderSize);
+    }
+
+    /// <summary>
     /// 逻辑更新
     /// </summary>
     public override void LogicUpdate()

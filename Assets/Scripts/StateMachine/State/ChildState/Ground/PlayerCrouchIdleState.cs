@@ -27,6 +27,8 @@ public class PlayerCrouchIdleState : PlayerGroundState
 
         //设置速度为0
         player.SetVelocityZero();
+        //设置蹲下时的碰撞盒
+        player.SetBoxColliderData(playerData.CrouchColliderOffset, playerData.CrouchColliderSize);
 
     }
 
@@ -43,8 +45,8 @@ public class PlayerCrouchIdleState : PlayerGroundState
             //切换到蹲下移动状态
             stateMachine.ChangeState(player.CrouchMoveState);
         }
-        //竖直输入不为 -1 即 松开S
-        else if (yInput != -1)
+        //竖直输入不为 -1 即 松开S 且 头顶没有接触墙
+        else if (yInput != -1 && !isTouchingCeiling)
         {
             //切换到等待状态
             stateMachine.ChangeState(player.IdleState);

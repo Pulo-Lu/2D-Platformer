@@ -41,6 +41,7 @@ public class PlayerJumpState : PlayerAbiilityState
             //设置竖直移动速度
             player.SetVelocityY(playerData.jumpVelocity * playerData.CrouchJump);
         }
+        //正常跳跃
         else
         {
             //设置竖直移动速度
