@@ -69,16 +69,10 @@ public class PlayerInAirState : PlayerState
         ControlJumpHeight();
 
         //接触墙面 且 不接触墙角 且 不在地面
-        if(isTouchingWall && !isTouchingLedge && !isGround)
+        if (isTouchingWall && !isTouchingLedge && !isGround)
         {
-            //再次判断是否在地面上
-            isGround = player.CheckLeftFootIsGround() || player.CheckRightFootIsGround();
-            //不在地面上
-            if (!isGround)
-            {
-                //切换到玩家在墙角的状态
-                stateMachine.ChangeState(player.LedgeClimbState);
-            }
+            //切换到玩家在墙角的状态
+            stateMachine.ChangeState(player.LedgeClimbState);
         }
         //有抓墙输入 且 接触到墙
         else if (grabInput && isTouchingWall)
@@ -91,6 +85,12 @@ public class PlayerInAirState : PlayerState
         {
             //切换到跳跃状态
             stateMachine.ChangeState(player.JumpState);
+        }
+        //接触到墙 且 水平输入与人物朝向相同 且 竖直速度小于0
+        else if (isTouchingWall && xInput == player.FaceDir && player.CurrentVelocity.y < 0)    
+        {
+            //切换到抓着墙下滑状态
+            stateMachine.ChangeState(player.WallSlideState);
         }
         //为地面 且 玩家竖直速度接近0
         else if (isGround && player.CurrentVelocity.y < 0.01f)

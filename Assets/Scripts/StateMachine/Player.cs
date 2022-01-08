@@ -248,27 +248,27 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 检测左脚是否在地面上
+    /// 检测左脚是否在地面上（矩形检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckLeftFootIsGround()
     {
         //检测到返回true,否则返回false
-        return Physics2D.OverlapCircle(LetfFoot.position, playerData.GroundCheckRadius, playerData.GroundLayer);
+        return Physics2D.OverlapBox(LetfFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer);
     }
 
     /// <summary>
-    /// 检测右脚是否在地面上
+    /// 检测右脚是否在地面上（矩形检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckRightFootIsGround()
     {
         //检测到返回true,否则返回false
-        return Physics2D.OverlapCircle(RightFoot.position, playerData.GroundCheckRadius, playerData.GroundLayer);
+        return Physics2D.OverlapBox(RightFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer);
     }
 
     /// <summary>
-    /// 检测是否接触到墙面
+    /// 检测是否接触到墙面（射线检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckIsTouchWall()
@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 检测是否接触到墙角
+    /// 检测是否接触到墙角（射线检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckIsTouchLedge()
@@ -288,7 +288,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 蹲下检测头顶是否接触到墙
+    /// 蹲下检测头顶是否接触到墙（射线检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckIsTouchCeiling()
@@ -311,7 +311,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 计算墙角位置
+    /// 计算墙角位置（射线检测）
     /// </summary>
     /// <returns></returns>
     public Vector2 CalculateCorner()
@@ -349,10 +349,10 @@ public class Player : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        //画出左脚的球形检测
-        Gizmos.DrawWireSphere(LetfFoot.position, playerData.GroundCheckRadius);
-        //画出右脚的球形检测
-        Gizmos.DrawWireSphere(RightFoot.position, playerData.GroundCheckRadius);
+        //画出左脚的矩形检测
+        Gizmos.DrawWireCube(LetfFoot.position, playerData.GroundCheckBorder);
+        //画出右脚的矩形检测
+        Gizmos.DrawWireCube(RightFoot.position, playerData.GroundCheckBorder);
 
         //画出头顶的球形检测
         //Gizmos.DrawWireSphere(CeilingCheckCenter.position, playerData.CeilingCheckRadius);

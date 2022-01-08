@@ -27,8 +27,6 @@ public class PlayerIdleState : PlayerGroundState
 
         //设置速度为0
         player.SetVelocityZero();
-        //设置站立时的碰撞盒
-        player.SetBoxColliderData(playerData.StandColliderOffset, playerData.StandColliderSize);
     }
 
     /// <summary>

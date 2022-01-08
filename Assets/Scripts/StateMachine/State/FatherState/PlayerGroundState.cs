@@ -66,7 +66,7 @@ public class PlayerGroundState : PlayerState
         base.LogicUpdate();
 
         //有抓墙输入 且 接触到墙 且 检测到墙角
-        if(grabInput && isTouchingWall && isTouchingLedge)
+        if (grabInput && isTouchingWall && isTouchingLedge)
         {
             //切换到抓着墙状态
             stateMachine.ChangeState(player.WallGrabState);
@@ -78,7 +78,7 @@ public class PlayerGroundState : PlayerState
             stateMachine.ChangeState(player.JumpState);
         }
         //不在地面上 且 头顶上没有墙
-        else if (!isGround && !isTouchingCeiling)
+        else if (!isGround)
         {
             //设置可以延迟跳跃
             player.InAirState.SetCanJumpDelay();

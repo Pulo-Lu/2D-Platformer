@@ -48,9 +48,9 @@ public class PlayerData : ScriptableObject
 
     [Header("Check Data")]
     /// <summary>
-    /// 地面球形检测半径
+    /// 地面矩形检测宽高
     /// </summary>
-    public float GroundCheckRadius = 0.1f;
+    public Vector2 GroundCheckBorder = new Vector2(0.1f, 0.3f);
     /// <summary>
     /// 头顶球形检测半径
     /// </summary>

@@ -56,4 +56,15 @@ public class PlayerCrouchMoveState : PlayerGroundState
         }
     }
 
+    /// <summary>
+    /// 退出状态
+    /// </summary>
+    public override void Exit()
+    {
+        base.Exit();
+
+        //设置站立时的碰撞盒
+        player.SetBoxColliderData(playerData.StandColliderOffset, playerData.StandColliderSize);
+    }
+
 }

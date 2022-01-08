@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 玩家在墙角的状态
+/// 玩家在墙角攀爬的状态
 /// </summary>
 public class PlayerLedgeClimbState : PlayerState
 {
@@ -114,7 +114,7 @@ public class PlayerLedgeClimbState : PlayerState
         {
             //检测头顶是否有墙
             if (CheckIsTouchCeiling())
-            {
+            { 
                 //切换到蹲下等待状态
                 stateMachine.ChangeState(player.CrouchIdleState);
             }
