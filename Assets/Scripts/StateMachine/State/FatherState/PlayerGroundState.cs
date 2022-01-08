@@ -31,6 +31,10 @@ public class PlayerGroundState : PlayerState
     /// 蹲下检测头顶是否接触到墙
     /// </summary>
     protected bool isTouchingCeiling;
+    /// <summary>
+    /// 是否检测到墙角
+    /// </summary>
+    protected bool isTouchingLedge;
 
     /// <summary>
     /// 构造方法
@@ -61,20 +65,20 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
-        //有抓墙输入 且 接触到墙
-        if(grabInput && isTouchingWall)
+        //有抓墙输入 且 接触到墙 且 检测到墙角
+        if(grabInput && isTouchingWall && isTouchingLedge)
         {
             //切换到抓着墙状态
             stateMachine.ChangeState(player.WallGrabState);
         }
-        //有跳跃输入 且 跳跃次数不为0
-        else if (jumpInput && player.JumpState.CanJump())
+        //有跳跃输入 且 跳跃次数不为0 且 头顶上没有墙
+        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling)
         {
             //切换到跳跃状态
             stateMachine.ChangeState(player.JumpState);
         }
-        //不在地面上
-        else if (!isGround)
+        //不在地面上 且 头顶上没有墙
+        else if (!isGround && !isTouchingCeiling)
         {
             //设置可以延迟跳跃
             player.InAirState.SetCanJumpDelay();
@@ -101,5 +105,8 @@ public class PlayerGroundState : PlayerState
         isTouchingWall = player.CheckIsTouchWall();
         //蹲下检测头顶是否接触到墙
         isTouchingCeiling = player.CheckIsTouchCeiling();
+        //检测是否接触到墙角
+        isTouchingLedge = player.CheckIsTouchLedge();
+
     }
 }

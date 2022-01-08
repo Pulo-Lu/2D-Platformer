@@ -66,7 +66,9 @@ public class PlayerLedgeClimbState : PlayerState
         player.transform.position = startPos;
     }
 
-    //退出状态
+    /// <summary>
+    /// 退出状态
+    /// </summary>
     public override void Exit()
     {
         base.Exit();
@@ -83,13 +85,18 @@ public class PlayerLedgeClimbState : PlayerState
         }
     }
 
-    //设置检测位置
+    /// <summary>
+    /// 设置检测位置
+    /// </summary>
+    /// <param name="detecedPos"></param>
     public void SetdetecedPos(Vector3 detecedPos)
     {
         this.detecedPos = detecedPos;
     }
 
-    //逻辑更新
+    /// <summary>
+    /// 逻辑更新
+    /// </summary>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -105,8 +112,19 @@ public class PlayerLedgeClimbState : PlayerState
         //动画结束
         if (isAnimationFinish)
         {
-            //切换到等待状态
-            stateMachine.ChangeState(player.IdleState);
+            //检测头顶是否有墙
+            if (CheckIsTouchCeiling())
+            {
+                //切换到蹲下等待状态
+                stateMachine.ChangeState(player.CrouchIdleState);
+            }
+            //没有
+            else
+            {
+                //切换到等待状态
+                stateMachine.ChangeState(player.IdleState);
+            }
+    
         }
         //抓着墙角 且 没有攀爬
         else if (isHolding && !isClimbing)
@@ -139,7 +157,9 @@ public class PlayerLedgeClimbState : PlayerState
         isHolding = true;
     }
 
-    //结束播放动画
+    /// <summary>
+    /// 结束播放动画
+    /// </summary>
     public override void OnAnimationFinish()
     {
         base.OnAnimationFinish();
@@ -150,4 +170,13 @@ public class PlayerLedgeClimbState : PlayerState
         isAnimationFinish = true;
     }
 
+    /// <summary>
+    /// 检测头顶是否有墙
+    /// </summary>
+    private bool CheckIsTouchCeiling()
+    {
+        RaycastHit2D hit2D = Physics2D.Raycast(cornerPos + new Vector2(0.15f * player.FaceDir, 0), Vector2.up, 1.6f, playerData.GroundLayer);
+        Debug.DrawLine(cornerPos, cornerPos + Vector2.up * 1.6f, Color.red);
+        return hit2D;
+    }
 }

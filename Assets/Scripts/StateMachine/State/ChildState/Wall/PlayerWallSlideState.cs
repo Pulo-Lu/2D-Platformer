@@ -32,6 +32,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         //没有Y方向竖直输入
         if (yInput == 0)
         {
+            Debug.Log(2);
             //切换到抓着墙的状态
             stateMachine.ChangeState(player.WallGrabState);
         }
@@ -40,6 +41,12 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         {
             //切换到上爬状态
             stateMachine.ChangeState(player.WallClimbState);
+        }
+        //接触到地面
+        else if (isGround)
+        {
+            //切换到等待状态
+            stateMachine.ChangeState(player.IdleState);
         }
       
     }
