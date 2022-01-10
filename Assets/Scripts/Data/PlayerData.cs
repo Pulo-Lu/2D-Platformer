@@ -111,9 +111,19 @@ public class PlayerData : ScriptableObject
     /// <summary>
     /// 单面墙反墙跳速度大小
     /// </summary>
-    public Vector2 WallJumpVelocity = new Vector2(5, 15);
+    public Vector2 WallJumpVelocity = new Vector2(7, 20);
     /// <summary>
     /// 单面墙反墙跳间隔时间大小
     /// </summary>
     public float WallJumpTime = 0.3f;
+
+    [Header("Wall Round Jump")]
+    /// <summary>
+    /// 两面墙之间来回跳的速度大小
+    /// </summary>
+    public Vector2 WallRoundJumpVelocity = new Vector2(10, 15);
+    /// <summary>
+    /// 两面墙之间来回跳的间隔时间大小
+    /// </summary>
+    public float WallRoundJumpTime = 0.4f;
 }

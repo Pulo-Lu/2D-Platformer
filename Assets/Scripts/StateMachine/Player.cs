@@ -64,6 +64,10 @@ public class Player : MonoBehaviour
     /// 玩家单面墙反墙跳状态
     /// </summary>
     public PlayerWallJumpState WallJumpState { get; private set; }
+    /// <summary>
+    /// 玩家两面墙之间来回反墙跳状态
+    /// </summary>
+    public PlayerWallRoundJumpState WallRoundJumpState { get; private set; }
 
     #endregion
 
@@ -158,12 +162,11 @@ public class Player : MonoBehaviour
         //初始化玩家蹲下移动的状态
         CrouchMoveState = new PlayerCrouchMoveState(this, playerData, stateMachine, "CrouchMove");
         //初始化玩家单面墙反墙跳的状态
-        WallJumpState = new PlayerWallJumpState(this, playerData, stateMachine, "InAir");
-    }
+        WallJumpState = new PlayerWallJumpState(this, playerData, stateMachine, "WallJump");
+        //初始化玩家两面墙之间来回反墙跳状态
+        WallRoundJumpState = new PlayerWallRoundJumpState(this, playerData, stateMachine, "WallRoundJump");
 
-    // Start is called before the first frame update
-    void Start()
-    {
+
         //获取 PlayerInputHandler 输入组件
         inputHandler = GetComponent<PlayerInputHandler>();
         //获取 动画 组件
@@ -174,7 +177,11 @@ public class Player : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         //状态机初始化
         stateMachine.Init(IdleState);
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         //玩家面向右
         FaceDir = 1;
     }

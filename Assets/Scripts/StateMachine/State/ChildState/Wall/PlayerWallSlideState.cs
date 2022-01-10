@@ -32,20 +32,28 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         //有抓墙输入
         if (grabInput)
         {
+            //竖直输入为1 ：W
+        
+            if (yInput == 1)
+            {
+                //切换到上爬状态
+                stateMachine.ChangeState(player.WallClimbState);
+              
+            }
             //没有Y方向竖直输入
-            if (yInput == 0)
+            else if (yInput == 0)
             {
                 //切换到抓着墙的状态
                 stateMachine.ChangeState(player.WallGrabState);
             }
-            //竖直输入为1 ：W
-            else if (yInput == 1)
-            {
-                //切换到上爬状态
-                stateMachine.ChangeState(player.WallClimbState);
-            }
         }
-       
+        //接触墙面 且 有跳跃输入 且 水平方向输入与玩家朝向一致
+        else if (isTouchingWall && jumpInput && xInput == player.FaceDir)
+        {
+            Debug.Log(2);
+            //切换到玩家单面墙反墙跳状态
+            stateMachine.ChangeState(player.WallJumpState);
+        }
     }
 
 }

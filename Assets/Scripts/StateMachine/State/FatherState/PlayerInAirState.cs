@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
+ /// <summary>
 ///  玩家处在空中时的父类状态
 /// </summary>
 public class PlayerInAirState : PlayerState
@@ -73,6 +73,12 @@ public class PlayerInAirState : PlayerState
         {
             //切换到玩家单面墙反墙跳状态
             stateMachine.ChangeState(player.WallJumpState);
+        }
+        //接触墙面 且 有跳跃输入 且 没有水平方向输入
+        else if (isTouchingWall && jumpInput && xInput == 0)
+        {
+            //切换到玩家两面墙之间来回跳的状态
+            stateMachine.ChangeState(player.WallRoundJumpState);
         }
         //接触墙面 且 不接触墙角 且 不在地面
         else if (isTouchingWall && !isTouchingLedge && !isGround)

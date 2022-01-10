@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 玩家单面墙反墙跳状态
+///  两面墙之间来回跳的状态
 /// </summary>
-public class PlayerWallJumpState : PlayerAbiilityState
+public class PlayerWallRoundJumpState: PlayerAbiilityState
 {
-
     /// <summary>
     /// 构造方法
     /// </summary>
@@ -15,7 +14,7 @@ public class PlayerWallJumpState : PlayerAbiilityState
     /// <param name="playerData">玩家数据脚本</param>
     /// <param name="stateMachine">状态机</param>
     /// <param name="animBoolName">动画切换名称</param>
-    public PlayerWallJumpState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
+    public PlayerWallRoundJumpState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
     }
 
@@ -26,9 +25,12 @@ public class PlayerWallJumpState : PlayerAbiilityState
     {
         base.Enter();
 
+        //检测是否需要翻转
+        player.CheckNeedFlip(-player.FaceDir);
         //设置反墙跳速度
-        player.SetVelocityX(playerData.WallJumpVelocity.x * -player.FaceDir);
-        player.SetVelocityY(playerData.WallJumpVelocity.y);
+        player.SetVelocityX(playerData.WallRoundJumpVelocity.x * player.FaceDir);
+        player.SetVelocityY(playerData.WallRoundJumpVelocity.y);
+
     }
 
     /// <summary>
@@ -38,11 +40,17 @@ public class PlayerWallJumpState : PlayerAbiilityState
     {
         base.LogicUpdate();
 
+        //设置动画条件
+        player.animator.SetFloat("XVelocity", Mathf.Abs(player.CurrentVelocity.x));
+        player.animator.SetFloat("YVelocity", player.CurrentVelocity.y);
+
         //时间间隔大于等于单面墙反墙跳的时间
-        if (Time.time - stateEnterTime >= playerData.WallJumpTime) 
+        if (Time.time - stateEnterTime >= playerData.WallRoundJumpTime)
         {
             //切换能力行为
             isAbilityDone = true;
         }
     }
+
+
 }
