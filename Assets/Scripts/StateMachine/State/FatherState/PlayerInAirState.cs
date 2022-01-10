@@ -68,8 +68,14 @@ public class PlayerInAirState : PlayerState
         //根据按键时间控制的跳跃高度
         ControlJumpHeight();
 
+        //接触墙面 且 有跳跃输入 且 水平方向输入与玩家朝向一致
+        if (isTouchingWall && jumpInput && xInput == player.FaceDir)
+        {
+            //切换到玩家单面墙反墙跳状态
+            stateMachine.ChangeState(player.WallJumpState);
+        }
         //接触墙面 且 不接触墙角 且 不在地面
-        if (isTouchingWall && !isTouchingLedge && !isGround)
+        else if (isTouchingWall && !isTouchingLedge && !isGround)
         {
             //切换到玩家在墙角的状态
             stateMachine.ChangeState(player.LedgeClimbState);
@@ -87,7 +93,7 @@ public class PlayerInAirState : PlayerState
             stateMachine.ChangeState(player.JumpState);
         }
         //接触到墙 且 水平输入与人物朝向相同 且 竖直速度小于0
-        else if (isTouchingWall && xInput == player.FaceDir && player.CurrentVelocity.y < 0)    
+        else if (isTouchingWall && xInput == player.FaceDir && player.CurrentVelocity.y < playerData.wallSlideThehole)    
         {
             //切换到抓着墙下滑状态
             stateMachine.ChangeState(player.WallSlideState);

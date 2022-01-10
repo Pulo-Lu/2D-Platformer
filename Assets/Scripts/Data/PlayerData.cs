@@ -45,6 +45,10 @@ public class PlayerData : ScriptableObject
     /// 空中方向移动速度
     /// </summary>
     public float movementInAir = 0.8f;
+    /// <summary>
+    /// 下滑状态持续时间（空中状态转换到单面墙反墙跳时间大小）
+    /// </summary>
+    public float wallSlideThehole = -3f;
 
     [Header("Check Data")]
     /// <summary>
@@ -69,21 +73,21 @@ public class PlayerData : ScriptableObject
     /// <summary>
     /// 抓着墙上爬的速度
     /// </summary>
-    public float wallClimbVelocity = 3f;
+    public float WallClimbVelocity = 3f;
     /// <summary>
     /// 抓着墙下滑的速度
     /// </summary>
-    public float wallSlideVelocity = 5f;
+    public float WallSlideVelocity = 5f;
 
     [Header("Ledge Climb Data")]
     /// <summary>
     /// 抓着墙角时相对于墙角的偏移量
     /// </summary>
-    public Vector2 startOffset;
+    public Vector2 StartOffset;
     /// <summary>
     /// 爬上墙角时相对于墙角的偏移量
     /// </summary>
-    public Vector2 endOffset;
+    public Vector2 EndOffset;
 
     [Header("Crouch Data")]
     /// <summary>
@@ -102,4 +106,14 @@ public class PlayerData : ScriptableObject
     /// 蹲下时碰撞盒大小
     /// </summary>
     public Vector2 CrouchColliderSize;
+
+    [Header("Wall Jump")]
+    /// <summary>
+    /// 单面墙反墙跳速度大小
+    /// </summary>
+    public Vector2 WallJumpVelocity = new Vector2(5, 15);
+    /// <summary>
+    /// 单面墙反墙跳间隔时间大小
+    /// </summary>
+    public float WallJumpTime = 0.3f;
 }

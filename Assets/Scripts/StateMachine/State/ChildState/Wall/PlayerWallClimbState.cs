@@ -26,7 +26,7 @@ public class PlayerWallClimbState : PlayerTouchingWallState
         base.LogicUpdate();
 
         //设置玩家竖直速度为抓着墙上爬的速度
-        player.SetVelocityY(playerData.wallClimbVelocity * yInput);
+        player.SetVelocityY(playerData.WallClimbVelocity * yInput);
 
         //没有Y方向竖直输入
         if(yInput == 0)

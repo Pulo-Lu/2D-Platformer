@@ -58,9 +58,9 @@ public class PlayerLedgeClimbState : PlayerState
         cornerPos = player.CalculateCorner();
 
         //爬墙开始位置
-        startPos = cornerPos + new Vector2(playerData.startOffset.x * player.FaceDir, playerData.startOffset.y);
+        startPos = cornerPos + new Vector2(playerData.StartOffset.x * player.FaceDir, playerData.StartOffset.y);
         //爬墙结束位置
-        endPos = cornerPos + new Vector2(playerData.endOffset.x * player.FaceDir, playerData.endOffset.y);
+        endPos = cornerPos + new Vector2(playerData.EndOffset.x * player.FaceDir, playerData.EndOffset.y);
 
         //将玩家位置设置为爬墙开始位置
         player.transform.position = startPos;

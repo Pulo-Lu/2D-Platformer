@@ -60,6 +60,10 @@ public class Player : MonoBehaviour
     /// 玩家蹲下移动的状态
     /// </summary>
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
+    /// <summary>
+    /// 玩家单面墙反墙跳状态
+    /// </summary>
+    public PlayerWallJumpState WallJumpState { get; private set; }
 
     #endregion
 
@@ -153,6 +157,8 @@ public class Player : MonoBehaviour
         CrouchIdleState = new PlayerCrouchIdleState(this, playerData, stateMachine, "CrouchIdle");
         //初始化玩家蹲下移动的状态
         CrouchMoveState = new PlayerCrouchMoveState(this, playerData, stateMachine, "CrouchMove");
+        //初始化玩家单面墙反墙跳的状态
+        WallJumpState = new PlayerWallJumpState(this, playerData, stateMachine, "InAir");
     }
 
     // Start is called before the first frame update

@@ -38,8 +38,14 @@ public class PlayerTouchingWallState : PlayerState
     {
         base.LogicUpdate();
 
+        //接触墙面 且 有跳跃输入 且 水平方向输入与玩家朝向一致
+        if (isTouchingWall && jumpInput && xInput == player.FaceDir)
+        {
+            //切换到玩家单面墙反墙跳状态
+            stateMachine.ChangeState(player.WallJumpState);
+        }
         //接触墙面 且 不接触墙角 且 不在地面
-        if (isTouchingWall && !isTouchingLedge && !isGround)
+        else if (isTouchingWall && !isTouchingLedge && !isGround)
         {
             //切换到玩家在墙角的状态
             stateMachine.ChangeState(player.LedgeClimbState);

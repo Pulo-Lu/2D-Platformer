@@ -27,7 +27,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         base.LogicUpdate();
 
         //设置玩家竖直速度为抓着墙下滑的速度
-        player.SetVelocityY(playerData.wallSlideVelocity * -1);
+        player.SetVelocityY(playerData.WallSlideVelocity * -1);
 
         //有抓墙输入
         if (grabInput)
