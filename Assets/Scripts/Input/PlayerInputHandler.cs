@@ -42,6 +42,11 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public bool GrabInput { get; private set; }
 
+    /// <summary>
+    /// 保存玩家翻滚输入
+    /// </summary>
+    public bool ScrollInput { get; private set; }
+
     private void Update()
     {
         //有玩家跳跃输入
@@ -112,6 +117,26 @@ public class PlayerInputHandler : MonoBehaviour
         {
             //不抓墙
             GrabInput = false;
+        }
+    }
+    
+    /// <summary>
+    /// 玩家翻滚事件
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnScrollInput(InputAction.CallbackContext context)
+    {
+        //按下按键
+        if (context.started)
+        {
+            //翻滚
+            ScrollInput = true;       
+        }
+        //松开按键
+        if (context.canceled)
+        {
+            //不翻滚
+            ScrollInput = false;
         }
     }
 

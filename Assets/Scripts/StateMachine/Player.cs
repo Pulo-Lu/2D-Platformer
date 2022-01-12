@@ -68,6 +68,10 @@ public class Player : MonoBehaviour
     /// 玩家两面墙之间来回反墙跳状态
     /// </summary>
     public PlayerWallRoundJumpState WallRoundJumpState { get; private set; }
+    /// <summary>
+    /// 玩家翻滚状态
+    /// </summary>
+    public PlayerScrollState ScrollState { get; private set; }
 
     #endregion
 
@@ -165,7 +169,8 @@ public class Player : MonoBehaviour
         WallJumpState = new PlayerWallJumpState(this, playerData, stateMachine, "WallJump");
         //初始化玩家两面墙之间来回反墙跳状态
         WallRoundJumpState = new PlayerWallRoundJumpState(this, playerData, stateMachine, "WallRoundJump");
-
+        //初始化玩家翻滚状态
+        ScrollState = new PlayerScrollState(this, playerData, stateMachine, "Scroll");
 
         //获取 PlayerInputHandler 输入组件
         inputHandler = GetComponent<PlayerInputHandler>();

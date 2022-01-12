@@ -126,4 +126,10 @@ public class PlayerData : ScriptableObject
     /// 两面墙之间来回跳的间隔时间大小
     /// </summary>
     public float WallRoundJumpTime = 0.4f;
+
+    [Header("Scroll")]
+    /// <summary>
+    /// 翻滚速度大小
+    /// </summary>
+    public float ScrollVelocity = 10f;
 }

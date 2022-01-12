@@ -65,8 +65,14 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
+        //不接触墙 且 头顶没有墙 且 有翻滚输入 且 在地面
+        if (!isTouchingWall && !isTouchingCeiling && scrollInput && isGround) 
+        {
+            //切换到翻滚状态
+            stateMachine.ChangeState(player.ScrollState);
+        }
         //有抓墙输入 且 接触到墙 且 检测到墙角
-        if (grabInput && isTouchingWall && isTouchingLedge)
+        else if (grabInput && isTouchingWall && isTouchingLedge)
         {
             //切换到抓着墙状态
             stateMachine.ChangeState(player.WallGrabState);

@@ -41,6 +41,11 @@ public class PlayerState
     /// </summary>
     protected bool grabInput;
     /// <summary>
+    /// 翻滚输入
+    /// </summary>
+    protected bool scrollInput;
+
+    /// <summary>
     /// 是否上升过程中
     /// </summary>
     protected bool jumpInputStop;
@@ -99,6 +104,9 @@ public class PlayerState
         jumpInputStop = player.inputHandler.JumpInputStop;
         //获取抓墙输入
         grabInput = player.inputHandler.GrabInput;
+        //获取翻滚输入
+        scrollInput = player.inputHandler.ScrollInput;
+
     }
 
     /// <summary>

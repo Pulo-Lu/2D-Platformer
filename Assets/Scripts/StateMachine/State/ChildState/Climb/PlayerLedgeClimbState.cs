@@ -16,6 +16,10 @@ public class PlayerLedgeClimbState : PlayerState
     /// 是否正在攀爬
     /// </summary>
     private bool isClimbing;
+    /// <summary>
+    /// 蹲下检测头顶是否接触到墙
+    /// </summary>
+    protected bool isTouchingCeiling;
 
     /// <summary>
     /// 检测位置
@@ -113,8 +117,8 @@ public class PlayerLedgeClimbState : PlayerState
         if (isAnimationFinish)
         {
             //检测头顶是否有墙
-            if (CheckIsTouchCeiling())
-            { 
+            if (isTouchingCeiling)
+            {
                 //切换到蹲下等待状态
                 stateMachine.ChangeState(player.CrouchIdleState);
             }
@@ -178,5 +182,15 @@ public class PlayerLedgeClimbState : PlayerState
         RaycastHit2D hit2D = Physics2D.Raycast(cornerPos + new Vector2(0.15f * player.FaceDir, 0), Vector2.up, 1.6f, playerData.GroundLayer);
         Debug.DrawLine(cornerPos, cornerPos + Vector2.up * 1.6f, Color.red);
         return hit2D;
+    }
+
+    /// <summary>
+    /// 射线检测
+    /// </summary>
+    public override void OnCheck()
+    {
+        base.OnCheck();
+        //蹲下检测头顶是否接触到墙
+        isTouchingCeiling = CheckIsTouchCeiling();
     }
 }

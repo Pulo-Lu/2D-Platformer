@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 蹲下等待状态
+/// 玩家翻滚状态
 /// </summary>
-public class PlayerCrouchIdleState : PlayerGroundState
+public class PlayerScrollState : PlayerAbiilityState
 {
     /// <summary>
     /// 构造方法
@@ -14,7 +14,7 @@ public class PlayerCrouchIdleState : PlayerGroundState
     /// <param name="playerData">玩家数据脚本</param>
     /// <param name="stateMachine">状态机</param>
     /// <param name="animBoolName">动画切换名称</param>
-    public PlayerCrouchIdleState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
+    public PlayerScrollState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
     }
 
@@ -25,11 +25,10 @@ public class PlayerCrouchIdleState : PlayerGroundState
     {
         base.Enter();
 
-        //设置速度为0
-        player.SetVelocityZero();
         //设置蹲下时的碰撞盒
         player.SetBoxColliderData(playerData.CrouchColliderOffset, playerData.CrouchColliderSize);
-
+        //设置翻滚速度
+        player.SetVelocityX(playerData.ScrollVelocity * player.FaceDir);
     }
 
     /// <summary>
@@ -39,18 +38,20 @@ public class PlayerCrouchIdleState : PlayerGroundState
     {
         base.LogicUpdate();
 
-        //水平输入不为0
-        if(xInput != 0)
+        //不切换能力行为 且 （动画播放完成 或者 有水平输入 且 水平输入不为人物朝向） 
+        if (!isAbilityDone && (isAnimationFinish || xInput != 0 && xInput != player.FaceDir))
         {
-            //切换到蹲下移动状态
-            stateMachine.ChangeState(player.CrouchMoveState);
+            //切换能力行为
+            isAbilityDone = true;
         }
-        //竖直输入为 0 即 松开S 且 头顶没有接触墙
-        else if (yInput == 0 && !isTouchingCeiling)
-        {
-            //切换到等待状态
-            stateMachine.ChangeState(player.IdleState);
-        }
+    }
+
+    /// <summary>
+    /// 动画播放完成
+    /// </summary>
+    public override void OnAnimationFinish()
+    {
+        base.OnAnimationFinish();
     }
 
     /// <summary>

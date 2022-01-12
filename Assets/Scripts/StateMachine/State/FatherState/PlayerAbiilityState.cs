@@ -38,6 +38,10 @@ public class PlayerAbiilityState : PlayerState
     /// 是否为地面
     /// </summary>
     protected bool isGround;
+    /// <summary>
+    /// 蹲下检测头顶是否接触到墙
+    /// </summary>
+    protected bool isTouchingCeiling;
 
     /// <summary>
     /// 进入状态
@@ -64,8 +68,18 @@ public class PlayerAbiilityState : PlayerState
             //为地面 且 玩家竖直速度接近0
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
-                //切换到等待状态
-                stateMachine.ChangeState(player.IdleState);
+                //头顶上有墙
+                if (isTouchingCeiling)
+                {
+                    //切换到下蹲等待状态
+                    stateMachine.ChangeState(player.CrouchIdleState);
+                }
+                //头顶上没有墙
+                else
+                {
+                    //切换到等待状态
+                    stateMachine.ChangeState(player.IdleState);
+                }
             }
             //不是地面
             else
@@ -90,6 +104,8 @@ public class PlayerAbiilityState : PlayerState
         isGround = isLeftFootGround || isRightFootGround;
         //是否一只脚落地
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
+        //蹲下检测头顶是否接触到墙
+        isTouchingCeiling = player.CheckIsTouchCeiling();
     }
 
 }

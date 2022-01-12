@@ -33,12 +33,10 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         if (grabInput)
         {
             //竖直输入为1 ：W
-        
             if (yInput == 1)
             {
                 //切换到上爬状态
                 stateMachine.ChangeState(player.WallClimbState);
-              
             }
             //没有Y方向竖直输入
             else if (yInput == 0)
@@ -50,7 +48,6 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         //接触墙面 且 有跳跃输入 且 水平方向输入与玩家朝向一致
         else if (isTouchingWall && jumpInput && xInput == player.FaceDir)
         {
-            Debug.Log(2);
             //切换到玩家单面墙反墙跳状态
             stateMachine.ChangeState(player.WallJumpState);
         }
