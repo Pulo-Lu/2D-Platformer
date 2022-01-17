@@ -45,6 +45,7 @@ public class PlayerGroundState : PlayerState
     /// <param name="animBoolName">动画切换名称</param>
     public PlayerGroundState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
+        stateType = StateType.Ground;
     }
 
     /// <summary>
@@ -54,6 +55,11 @@ public class PlayerGroundState : PlayerState
     {
         base.Enter();
 
+
+        if (player.stateMachine.LastState != null && player.stateMachine.LastState.stateType != StateType.Ground && player.stateMachine.LastState != player.DashState)
+        {
+            player.DashState.RefreshCoolTime();
+        }
         //重置跳跃次数
         player.JumpState.ResetJumpCount();
     }
@@ -65,8 +71,14 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
+        //有冲刺输入 且 可以冲刺
+        if (dashInput && player.DashState.CanDash())
+        {
+            //切换到冲刺状态
+            stateMachine.ChangeState(player.DashState);
+        }
         //不接触墙 且 头顶没有墙 且 有翻滚输入 且 在地面
-        if (!isTouchingWall && !isTouchingCeiling && scrollInput && isGround) 
+        else if (!isTouchingWall && !isTouchingCeiling && scrollInput && isGround) 
         {
             //切换到翻滚状态
             stateMachine.ChangeState(player.ScrollState);

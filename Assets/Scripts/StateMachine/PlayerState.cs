@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// 状态机状态类型枚举
+/// </summary>
+public enum StateType
+{
+    Ground,
+    InAir,
+    TouchingWall,
+    Ability,
+    Global,
+    Climb,
+}
+
+/// <summary>
 /// 玩家状态基类脚本
 /// </summary>
 public class PlayerState
@@ -23,6 +36,10 @@ public class PlayerState
     /// 动画切换名
     /// </summary>
     protected string animBoolName;
+    /// <summary>
+    /// 状态机状态类型
+    /// </summary>
+    public StateType stateType { get; protected set; }
 
     /// <summary>
     /// 限制水平方向输入
@@ -44,6 +61,10 @@ public class PlayerState
     /// 翻滚输入
     /// </summary>
     protected bool scrollInput;
+    /// <summary>
+    /// 冲刺输入
+    /// </summary>
+    protected bool dashInput;
 
     /// <summary>
     /// 是否上升过程中
@@ -106,7 +127,8 @@ public class PlayerState
         grabInput = player.inputHandler.GrabInput;
         //获取翻滚输入
         scrollInput = player.inputHandler.ScrollInput;
-
+        //获取冲刺输入
+        dashInput = player.inputHandler.DashInput;
     }
 
     /// <summary>

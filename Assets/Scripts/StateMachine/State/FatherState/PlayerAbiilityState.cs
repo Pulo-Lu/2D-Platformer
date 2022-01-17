@@ -16,12 +16,17 @@ public class PlayerAbiilityState : PlayerState
     /// <param name="animBoolName">动画切换名称</param>
     public PlayerAbiilityState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
+        stateType = StateType.Ability;
     }
 
     /// <summary>
     /// 是否切换地面父类状态或者空中父类状态
     /// </summary>
     protected bool isAbilityDone;
+    /// <summary>
+    /// 切换地面父类状态或者空中父类状态结束
+    /// </summary>
+    protected bool isAbilityOver;
     /// <summary>
     /// 左脚是否落地
     /// </summary>
@@ -42,6 +47,14 @@ public class PlayerAbiilityState : PlayerState
     /// 蹲下检测头顶是否接触到墙
     /// </summary>
     protected bool isTouchingCeiling;
+    /// <summary>
+    /// 上次使用时间
+    /// </summary>
+    protected float lastUseTime = -100;
+    /// <summary>
+    /// 自动刷新冷却
+    /// </summary>
+    protected bool canUseAbility;
 
     /// <summary>
     /// 进入状态
@@ -50,7 +63,7 @@ public class PlayerAbiilityState : PlayerState
     {
         base.Enter();
         //不切换 由于不同行为：冲刺，跳跃，翻滚，反墙跳，攻击，操作对象也不同，由具体行为控制切换
-        isAbilityDone = false;
+        isAbilityDone = isAbilityOver = false;
 
         
     }
@@ -62,9 +75,11 @@ public class PlayerAbiilityState : PlayerState
     {
         base.LogicUpdate();
 
-        //是否切换地面父类状态或者空中父类状态
-        if (isAbilityDone)
+        //切换地面父类状态或者空中父类状态 且 没有结束
+        if (isAbilityDone) 
         {
+            //当前时间设置为上次使用能力的时间
+            lastUseTime = Time.time;
             //为地面 且 玩家竖直速度接近0
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
@@ -87,6 +102,8 @@ public class PlayerAbiilityState : PlayerState
                 //切换到空中状态
                 stateMachine.ChangeState(player.InAirState);
             }
+            //结束切换地面父类状态或者空中父类状态
+            isAbilityOver = true;
         }
     }
 
@@ -106,6 +123,14 @@ public class PlayerAbiilityState : PlayerState
         isSingleFootGround = isLeftFootGround && !isRightFootGround || !isLeftFootGround && isRightFootGround;
         //蹲下检测头顶是否接触到墙
         isTouchingCeiling = player.CheckIsTouchCeiling();
+    }
+
+    /// <summary>
+    /// 自动刷新冷却时间
+    /// </summary>
+    public void RefreshCoolTime()
+    {
+        canUseAbility = true;
     }
 
 }

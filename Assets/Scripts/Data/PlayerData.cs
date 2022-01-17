@@ -132,4 +132,26 @@ public class PlayerData : ScriptableObject
     /// 翻滚速度大小
     /// </summary>
     public float ScrollVelocity = 10f;
+
+    [Header("Dash")]
+    /// <summary>
+    /// 冲刺时间缩放系数（子弹时间）
+    /// </summary>
+    public float DashTimeScale = 0.1f;
+    /// <summary>
+    /// 冲刺时子弹时间最大持续时间
+    /// </summary>
+    public float MaxDashHoldTime = 0.5f;
+    /// <summary>
+    /// 冲刺冷却时间
+    /// </summary>
+    public float DashCoolTime = 2f;
+    /// <summary>
+    /// 冲刺需要的时间
+    /// </summary>
+    public float DashTime = 0.5f;
+    /// <summary>
+    /// 冲刺速度
+    /// </summary>
+    public Vector2 dashVelocity = new Vector2(20, 10);
 }

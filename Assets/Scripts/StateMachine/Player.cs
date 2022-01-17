@@ -72,6 +72,10 @@ public class Player : MonoBehaviour
     /// 玩家翻滚状态
     /// </summary>
     public PlayerScrollState ScrollState { get; private set; }
+    /// <summary>
+    /// 玩家冲刺状态
+    /// </summary>
+    public PlayerDashState DashState { get; private set; }
 
     #endregion
 
@@ -171,6 +175,9 @@ public class Player : MonoBehaviour
         WallRoundJumpState = new PlayerWallRoundJumpState(this, playerData, stateMachine, "WallRoundJump");
         //初始化玩家翻滚状态
         ScrollState = new PlayerScrollState(this, playerData, stateMachine, "Scroll");
+        //初始化玩家冲刺状态
+        DashState = new PlayerDashState(this, playerData, stateMachine, "Dash");
+
 
         //获取 PlayerInputHandler 输入组件
         inputHandler = GetComponent<PlayerInputHandler>();

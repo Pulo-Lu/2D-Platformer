@@ -53,6 +53,7 @@ public class PlayerInAirState : PlayerState
     /// <param name="animBoolName">动画切换名称</param>
     public PlayerInAirState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
+        stateType = StateType.InAir;
     }
 
     /// <summary>
@@ -68,8 +69,14 @@ public class PlayerInAirState : PlayerState
         //根据按键时间控制的跳跃高度
         ControlJumpHeight();
 
+        //有冲刺输入 且 可以冲刺
+        if (dashInput && player.DashState.CanDash())
+        {
+            //切换到冲刺状态
+            stateMachine.ChangeState(player.DashState);
+        }
         //接触墙面 且 有跳跃输入 且 水平方向输入与玩家朝向一致
-        if (isTouchingWall && jumpInput && xInput == player.FaceDir)
+        else if (isTouchingWall && jumpInput && xInput == player.FaceDir)
         {
             //切换到玩家单面墙反墙跳状态
             stateMachine.ChangeState(player.WallJumpState);

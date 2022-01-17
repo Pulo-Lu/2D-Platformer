@@ -45,7 +45,12 @@ public class PlayerInputHandler : MonoBehaviour
     /// <summary>
     /// 保存玩家翻滚输入
     /// </summary>
-    public bool ScrollInput { get; private set; }
+    public bool ScrollInput { get; set; }
+
+    /// <summary>
+    /// 保存玩家冲刺输入
+    /// </summary>
+    public bool DashInput { get; private set; }
 
     private void Update()
     {
@@ -132,11 +137,26 @@ public class PlayerInputHandler : MonoBehaviour
             //翻滚
             ScrollInput = true;       
         }
+
+    }   
+    
+    /// <summary>
+    /// 玩家冲刺事件
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnDashInput(InputAction.CallbackContext context)
+    {
+        //按下按键
+        if (context.started)
+        {
+            //冲刺
+            DashInput = true;       
+        }
         //松开按键
         if (context.canceled)
         {
-            //不翻滚
-            ScrollInput = false;
+            //不冲刺
+            DashInput = false;
         }
     }
 

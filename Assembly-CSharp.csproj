@@ -74,11 +74,13 @@
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\Input\PlayerInputHandler.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerWallRoundJumpState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerScrollState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerLandState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerWallJumpState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerDashState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Player.cs" />
     <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ground\PlayerCrouchMoveState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\State\ChildState\Ability\PlayerScrollState.cs" />
+    <Compile Include="Assets\Scripts\ShadowSpwaner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

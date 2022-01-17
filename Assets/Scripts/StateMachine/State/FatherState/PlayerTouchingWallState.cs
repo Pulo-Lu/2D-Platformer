@@ -29,6 +29,17 @@ public class PlayerTouchingWallState : PlayerState
     /// <param name="animBoolName">动画切换名称</param>
     public PlayerTouchingWallState(Player player, PlayerData playerData, StateMachine stateMachine, string animBoolName) : base(player, playerData, stateMachine, animBoolName)
     {
+        stateType = StateType.TouchingWall;
+    }
+
+    /// <summary>
+    /// 进入状态
+    /// </summary>
+    public override void Enter()
+    {
+        base.Enter();
+
+        player.JumpState.ResetJumpCount();
     }
 
     /// <summary>
