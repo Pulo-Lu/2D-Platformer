@@ -73,8 +73,14 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
+        //不接触墙 且 头顶没有墙 且 有翻滚输入 且 在地面
+        if (!isTouchingWall && !isTouchingCeiling && scrollInput && isGround)
+        {
+            //切换到翻滚状态
+            stateMachine.ChangeState(player.ScrollState);
+        }
         //有冲刺输入 且 没有接触墙 且 头顶没有墙 且 可以冲刺
-        if (dashInput && !isTouchingWall && !isTouchingCeiling && player.DashState.CanDash()) 
+        else if (dashInput && !isTouchingWall && !isTouchingCeiling && player.DashState.CanDash()) 
         {
             //设置速度为零
             player.SetVelocityZero();
@@ -91,12 +97,6 @@ public class PlayerGroundState : PlayerState
             }
             //切换到冲刺状态
             stateMachine.ChangeState(player.DashState);
-        }
-        //不接触墙 且 头顶没有墙 且 有翻滚输入 且 在地面
-        else if (!isTouchingWall && !isTouchingCeiling && scrollInput && isGround) 
-        {
-            //切换到翻滚状态
-            stateMachine.ChangeState(player.ScrollState);
         }
         //有抓墙输入 且 接触到墙 且 检测到墙角
         else if (grabInput && isTouchingWall && isTouchingLedge)

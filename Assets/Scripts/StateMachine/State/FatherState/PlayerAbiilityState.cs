@@ -65,8 +65,6 @@ public class PlayerAbiilityState : PlayerState
 
         //不切换 由于不同行为：冲刺，跳跃，翻滚，反墙跳，攻击，操作对象也不同，由具体行为控制切换
         isAbilityDone = isAbilityOver = false;
-
-        
     }
 
     /// <summary>
@@ -84,18 +82,9 @@ public class PlayerAbiilityState : PlayerState
             //为地面 且 玩家竖直速度接近0
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
-                ////头顶上有墙
-                //if (isTouchingCeiling)
-                //{
-                //    //切换到下蹲等待状态
-                //    stateMachine.ChangeState(player.CrouchIdleState);
-                //}
-                ////头顶上没有墙
-                //else
-                //{
-                //    //切换到等待状态
-                    stateMachine.ChangeState(player.IdleState);
-                //}
+             
+                //切换到等待状态
+                stateMachine.ChangeState(player.IdleState);
             }
             //不是地面
             else

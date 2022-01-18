@@ -79,6 +79,10 @@ public class PlayerState
     /// 进入状态时的时间
     /// </summary>
     protected float stateEnterTime;
+    /// <summary>
+    /// 进入状态的位置
+    /// </summary>
+    protected Vector3 enterPos;
 
     /// <summary>
     /// 构造方法
@@ -108,6 +112,8 @@ public class PlayerState
         player.animator.SetBool(animBoolName, true);
         //结束动画播放
         isAnimationFinish = false;
+        //记录进入状态的位置
+        enterPos = player.transform.position;
     }
 
     /// <summary>

@@ -36,8 +36,10 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.LogicUpdate();
 
+        player.transform.position = enterPos;
+
         //竖直输入为 -1 即 按下S
-        if (yInput == -1)
+        if (yInput == -1 || isTouchingCeiling)
         {
             //切换到蹲下等待状态
             stateMachine.ChangeState(player.CrouchIdleState);

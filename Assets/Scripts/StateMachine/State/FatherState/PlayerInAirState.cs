@@ -126,20 +126,8 @@ public class PlayerInAirState : PlayerState
         //为地面 且 玩家竖直速度接近0
         else if (isGround && player.CurrentVelocity.y < 0.01f)
         {
-            //只有一只脚落地
-            if (isSingleFootGround)
-            {
-                //Debug.Log("单脚落地");
-                //切换到单脚落地状态
-                stateMachine.ChangeState(player.HardLandState);
-            }
-            //双脚落地
-            else
-            {
-                //Debug.Log("双脚落地");
-                //切换到双脚落地状态
-                stateMachine.ChangeState(player.LandState);
-            }
+            //切换到等待状态
+            stateMachine.ChangeState(player.IdleState);
         }
         //在空中
         else

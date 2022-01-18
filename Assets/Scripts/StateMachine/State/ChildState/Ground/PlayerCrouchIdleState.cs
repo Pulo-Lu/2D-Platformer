@@ -49,7 +49,6 @@ public class PlayerCrouchIdleState : PlayerGroundState
         //竖直输入为 0 即 松开S 且 头顶没有接触墙
         else if (yInput == 0 && !isTouchingCeiling)
         {
-            Debug.Log(3);
             //切换到等待状态
             stateMachine.ChangeState(player.IdleState);
         }
