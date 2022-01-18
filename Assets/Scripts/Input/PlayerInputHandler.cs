@@ -137,7 +137,12 @@ public class PlayerInputHandler : MonoBehaviour
             //翻滚
             ScrollInput = true;       
         }
-
+        //松开按键
+        if (context.canceled)
+        {
+            //不翻滚
+            ScrollInput = false;
+        }
     }   
     
     /// <summary>
