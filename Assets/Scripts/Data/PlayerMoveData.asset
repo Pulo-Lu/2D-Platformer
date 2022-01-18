@@ -12,19 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09d783564ea1c546a33ae28bf8c9d6a, type: 3}
   m_Name: PlayerMoveData
   m_EditorClassIdentifier: 
-  movementVelocity: 10
   StandColliderOffset: {x: 0, y: -0.3}
   StandColliderSize: {x: 0.7, y: 1.5}
-  jumpVelocity: 16
+  movementVelocity: 10
+  gravityScale: 6
+  jumpVelocity: 15
   maxJumpCount: 2
-  jumpHeight: 0.5
+  jumpHeight: 1
   jumpDelay: 0.2
   movementInAir: 0.8
   wallSlideThehole: -5
+  maxFallVelocity: -20
   GroundCheckBorder: {x: 0.1, y: 0.3}
-  CeilingCheckRadius: 0.8
-  WallCheckLength: 0.6
+  wallCheckBorder: {x: 0.83, y: 0.05}
+  CeilingCheckRadius: 1.2
   GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  WallLayer:
     serializedVersion: 2
     m_Bits: 64
   WallClimbVelocity: 3
@@ -33,9 +38,15 @@ MonoBehaviour:
   EndOffset: {x: 0.4, y: 0.75}
   CrouchVelocity: 5
   CrouchJump: 1.5
-  CrouchColliderOffset: {x: 0.02, y: -0.6}
+  CrouchColliderOffset: {x: 0, y: -0.6}
   CrouchColliderSize: {x: 0.7, y: 0.9}
   WallJumpVelocity: {x: 5, y: 20}
   WallJumpTime: 0.25
   WallRoundJumpVelocity: {x: 10, y: 15}
   WallRoundJumpTime: 0.3
+  ScrollVelocity: 10
+  ScrollColliderOffset: {x: 0, y: 0}
+  ScrollColliderSize: {x: 0.7, y: 0.8}
+  dashVelocity: {x: 20, y: 10}
+  DashTime: 0.5
+  DashCoolTime: 2

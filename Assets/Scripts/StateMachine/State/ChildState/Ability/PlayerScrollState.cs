@@ -27,8 +27,8 @@ public class PlayerScrollState : PlayerAbiilityState
 
         //不翻滚
         player.inputHandler.ScrollInput = false;
-        //设置蹲下时的碰撞盒
-        player.SetBoxColliderData(playerData.CrouchColliderOffset, playerData.CrouchColliderSize);
+        //设置翻滚时的碰撞盒
+        player.SetBoxColliderData(playerData.ScrollColliderOffset, playerData.ScrollColliderSize);
         //设置翻滚速度
         player.SetVelocityX(playerData.ScrollVelocity * player.FaceDir);
     }

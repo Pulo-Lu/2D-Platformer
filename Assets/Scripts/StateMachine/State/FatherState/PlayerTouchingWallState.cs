@@ -39,6 +39,7 @@ public class PlayerTouchingWallState : PlayerState
     {
         base.Enter();
 
+        //重置跳跃次数
         player.JumpState.ResetJumpCount();
     }
 

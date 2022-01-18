@@ -40,5 +40,11 @@ public class PlayerWallClimbState : PlayerTouchingWallState
             //切换到下滑状态
             stateMachine.ChangeState(player.WallSlideState);
         }
+        //有跳跃输入
+        else if (jumpInput)
+        {
+            //切换到在两面墙之间来回跳状态
+            stateMachine.ChangeState(player.WallRoundJumpState);
+        }
     }
 }

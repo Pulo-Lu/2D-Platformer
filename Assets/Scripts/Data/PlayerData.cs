@@ -10,10 +10,6 @@ public class PlayerData : ScriptableObject
 {
     [Header("Move State")]
     /// <summary>
-    /// 水平方向移动速度
-    /// </summary>
-    public float movementVelocity = 10;
-    /// <summary>
     /// 站立时碰撞盒位置
     /// </summary>
     public Vector2 StandColliderOffset;
@@ -21,8 +17,18 @@ public class PlayerData : ScriptableObject
     /// 站立时碰撞盒大小
     /// </summary>
     public Vector2 StandColliderSize;
+    /// <summary>
+    /// 水平方向移动速度
+    /// </summary>
+    public float movementVelocity = 10;
+
+
 
     [Header("Jump State")]
+    /// <summary>
+    /// 重力
+    /// </summary>
+    public float gravityScale = 6f;
     /// <summary>
     /// 竖直方向移动速度
     /// </summary>
@@ -49,6 +55,10 @@ public class PlayerData : ScriptableObject
     /// 下滑状态持续时间（空中状态转换到单面墙反墙跳时间大小）
     /// </summary>
     public float wallSlideThehole = -3f;
+    /// <summary>
+    /// 空中下落的最大速度
+    /// </summary>
+    public float maxFallVelocity = -20f;
 
     [Header("Check Data")]
     /// <summary>
@@ -56,17 +66,21 @@ public class PlayerData : ScriptableObject
     /// </summary>
     public Vector2 GroundCheckBorder = new Vector2(0.1f, 0.3f);
     /// <summary>
+    /// 检测墙面的宽高
+    /// </summary>
+    public Vector2 wallCheckBorder = new Vector2(0.5f, 0.3f);
+    /// <summary>
     /// 头顶球形检测半径
     /// </summary>
     public float CeilingCheckRadius = 0.25f;
     /// <summary>
-    /// 射线检测墙面的长度
-    /// </summary>
-    public float WallCheckLength = 0.5f;
-    /// <summary>
     /// 地面检测层级
     /// </summary>
     public LayerMask GroundLayer;
+    /// <summary>
+    /// 墙面检测层级
+    /// </summary>
+    public LayerMask WallLayer;
 
 
     [Header("Wall Data")]
@@ -132,26 +146,28 @@ public class PlayerData : ScriptableObject
     /// 翻滚速度大小
     /// </summary>
     public float ScrollVelocity = 10f;
+    /// <summary>
+    /// 翻滚时碰撞盒偏移
+    /// </summary>
+    public Vector2 ScrollColliderOffset;
+    /// <summary>
+    /// 翻滚时碰撞盒大小
+    /// </summary>
+    public Vector2 ScrollColliderSize;
 
     [Header("Dash")]
     /// <summary>
-    /// 冲刺时间缩放系数（子弹时间）
+    /// 冲刺速度
     /// </summary>
-    public float DashTimeScale = 0.1f;
-    /// <summary>
-    /// 冲刺时子弹时间最大持续时间
-    /// </summary>
-    public float MaxDashHoldTime = 0.5f;
-    /// <summary>
-    /// 冲刺冷却时间
-    /// </summary>
-    public float DashCoolTime = 2f;
+    public Vector2 dashVelocity = new Vector2(20, 10);
     /// <summary>
     /// 冲刺需要的时间
     /// </summary>
     public float DashTime = 0.5f;
     /// <summary>
-    /// 冲刺速度
+    /// 冲刺冷却时间
     /// </summary>
-    public Vector2 dashVelocity = new Vector2(20, 10);
+    public float DashCoolTime = 2f;
+
+
 }

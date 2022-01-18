@@ -69,9 +69,21 @@ public class PlayerInAirState : PlayerState
         //根据按键时间控制的跳跃高度
         ControlJumpHeight();
 
-        //有冲刺输入 且 可以冲刺
-        if (dashInput && player.DashState.CanDash())
+
+        //有冲刺输入 且 没有接触墙 且 头顶没有墙 且 可以冲刺
+        if (dashInput && !isTouchingWall && player.DashState.CanDash())
         {
+            //有水平输入 或者 有竖直输入
+            if (xInput != 0 || yInput != 0) 
+            {
+                //设置冲刺方向
+                player.DashState.SetDashDirection(new Vector2Int(xInput, yInput));
+            }
+            else
+            {
+                //设置冲刺方向
+                player.DashState.SetDashDirection(new Vector2Int(player.FaceDir, 0));
+            }
             //切换到冲刺状态
             stateMachine.ChangeState(player.DashState);
         }
@@ -93,8 +105,8 @@ public class PlayerInAirState : PlayerState
             //切换到玩家在墙角的状态
             stateMachine.ChangeState(player.LedgeClimbState);
         }
-        //有抓墙输入 且 接触到墙
-        else if (grabInput && isTouchingWall)
+        //有抓墙输入 且 接触到墙 且接触墙角
+        else if (grabInput && isTouchingWall && isTouchingLedge)
         {
             //切换到抓着墙状态
             stateMachine.ChangeState(player.WallGrabState);
@@ -138,7 +150,6 @@ public class PlayerInAirState : PlayerState
             player.SetVelocityX(xInput * playerData.movementVelocity * playerData.movementInAir);
 
             //设置动画条件
-            player.animator.SetFloat("XVelocity", Mathf.Abs(player.CurrentVelocity.x));
             player.animator.SetFloat("YVelocity", player.CurrentVelocity.y);
 
         }

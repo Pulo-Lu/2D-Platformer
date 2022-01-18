@@ -55,9 +55,11 @@ public class PlayerGroundState : PlayerState
     {
         base.Enter();
 
-
-        if (player.stateMachine.LastState != null && player.stateMachine.LastState.stateType != StateType.Ground && player.stateMachine.LastState != player.DashState)
+        //上一个状态不为空 且 上一个状态不为地面的父类 且 上一个状态不为冲刺状态
+        if (player.stateMachine.LastState != null && player.stateMachine.LastState.stateType != StateType.Ground 
+            && player.stateMachine.LastState != player.DashState)
         {
+            //自动刷新冷却时间
             player.DashState.RefreshCoolTime();
         }
         //重置跳跃次数
@@ -71,9 +73,22 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
-        //有冲刺输入 且 可以冲刺
-        if (dashInput && player.DashState.CanDash())
+        //有冲刺输入 且 没有接触墙 且 头顶没有墙 且 可以冲刺
+        if (dashInput && !isTouchingWall && !isTouchingCeiling && player.DashState.CanDash()) 
         {
+            //设置速度为零
+            player.SetVelocityZero();
+            //有水平输入 且 竖直输入不为-1 即 S || 竖直输入为1 即 W
+            if (xInput != 0 && yInput != -1 || yInput == 1)
+            {
+                //设置冲刺方向
+                player.DashState.SetDashDirection(new Vector2Int(xInput, yInput));
+            }
+            else
+            {
+                //设置冲刺方向
+                player.DashState.SetDashDirection(new Vector2Int(player.FaceDir, 0));
+            }
             //切换到冲刺状态
             stateMachine.ChangeState(player.DashState);
         }

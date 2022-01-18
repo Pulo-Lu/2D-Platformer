@@ -194,8 +194,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //初始化状态机
+        stateMachine.Init(IdleState);
         //玩家面向右
         FaceDir = 1;
+        //设置重力
+        rb.gravityScale = playerData.gravityScale;
     }
 
     // Update is called once per frame
@@ -209,6 +213,8 @@ public class Player : MonoBehaviour
     {
         //状态机调用物理更新方法
         stateMachine.CurrentState.PhysicsUpdate();
+
+        ProtectiveMeasures();
     }
 
     /// <summary>
@@ -279,7 +285,7 @@ public class Player : MonoBehaviour
     public bool CheckLeftFootIsGround()
     {
         //检测到返回true,否则返回false
-        return Physics2D.OverlapBox(LetfFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer);
+        return Physics2D.OverlapBox(LetfFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer) != null;
     }
 
     /// <summary>
@@ -289,17 +295,17 @@ public class Player : MonoBehaviour
     public bool CheckRightFootIsGround()
     {
         //检测到返回true,否则返回false
-        return Physics2D.OverlapBox(RightFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer);
+        return Physics2D.OverlapBox(RightFoot.position, playerData.GroundCheckBorder, 0, playerData.GroundLayer) != null;
     }
 
     /// <summary>
-    /// 检测是否接触到墙面（射线检测）
+    /// 检测是否接触到墙面（矩形检测）
     /// </summary>
     /// <returns></returns>
     public bool CheckIsTouchWall()
     {
         //检测到返回true,否则返回false
-        return Physics2D.Raycast(WallCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+        return Physics2D.OverlapBox(WallCheckCenter.position, playerData.wallCheckBorder, 0, playerData.WallLayer);
     }
 
     /// <summary>
@@ -309,7 +315,7 @@ public class Player : MonoBehaviour
     public bool CheckIsTouchLedge()
     {
         //检测到返回true,否则返回false
-        return Physics2D.Raycast(LedgeCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+        return Physics2D.Raycast(LedgeCheckCenter.position, Vector2.right * FaceDir, playerData.wallCheckBorder.x, playerData.WallLayer);
     }
 
     /// <summary>
@@ -321,7 +327,7 @@ public class Player : MonoBehaviour
         //检测到返回true,否则返回false
         //return Physics2D.OverlapCircle(CeilingCheckCenter.position, playerData.CeilingCheckRadius, playerData.GroundLayer);
         //射线检测
-        return Physics2D.Raycast(CeilingCheckCenter.position, Vector2.up, playerData.CeilingCheckRadius, playerData.GroundLayer);
+        return Physics2D.Raycast(CeilingCheckCenter.position, Vector2.up, playerData.CeilingCheckRadius, playerData.WallLayer);
     }
 
     /// <summary>
@@ -336,19 +342,32 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 保护措施
+    /// </summary>
+    private void ProtectiveMeasures()
+    {
+        //竖直速度 小于等于 最大下落速度 
+        if (rb.velocity.y <= playerData.maxFallVelocity)
+        {
+            //将当前速度设置为最大速度
+            SetVelocityY(playerData.maxFallVelocity);
+        }
+    }
+
+    /// <summary>
     /// 计算墙角位置（射线检测）
     /// </summary>
     /// <returns></returns>
     public Vector2 CalculateCorner()
     {
         //获取从 检测墙面 Transform 发射到墙面的射线 ；射线与墙面接触x值即为墙角x坐标
-        RaycastHit2D hit_x = Physics2D.Raycast(WallCheckCenter.position, Vector2.right * FaceDir, playerData.WallCheckLength, playerData.GroundLayer);
+        RaycastHit2D hit_x = Physics2D.Raycast(WallCheckCenter.position, Vector2.right * FaceDir, playerData.wallCheckBorder.x, playerData.GroundLayer);
         //计算  检测点
         Vector2 yCenter = new Vector2(WallCheckCenter.position.x + (hit_x.distance + 0.015f) * FaceDir, LedgeCheckCenter.position.y);
         //获取从 检测点 向下发射到墙面的射线 ；射线与墙面接触y值即为墙角y坐标
         RaycastHit2D hit_y = Physics2D.Raycast(yCenter, Vector2.down, LedgeCheckCenter.position.y - WallCheckCenter.position.y, playerData.GroundLayer);
         //返回墙角坐标
-        return new Vector2(WallCheckCenter.position.x + hit_x.distance * FaceDir, LedgeCheckCenter.position.y - hit_y.distance);
+        return new Vector2(WallCheckCenter.position.x + (hit_x.distance) * FaceDir, LedgeCheckCenter.position.y - hit_y.distance);
     }
 
     /// <summary>
@@ -382,10 +401,10 @@ public class Player : MonoBehaviour
         //画出头顶的球形检测
         //Gizmos.DrawWireSphere(CeilingCheckCenter.position, playerData.CeilingCheckRadius);
 
-        //画出接触墙面的射线检测
-        Gizmos.DrawLine(WallCheckCenter.position, WallCheckCenter.position + Vector3.right * FaceDir * playerData.WallCheckLength);
+        //画出接触墙面的矩形检测
+        Gizmos.DrawWireCube(WallCheckCenter.position, playerData.wallCheckBorder);
         //画出接触墙角的射线检测
-        Gizmos.DrawLine(LedgeCheckCenter.position, LedgeCheckCenter.position + Vector3.right * FaceDir * playerData.WallCheckLength);
+        Gizmos.DrawLine(LedgeCheckCenter.position, LedgeCheckCenter.position + Vector3.right * FaceDir * playerData.wallCheckBorder.x);
         //画出头顶接触墙的射线检测
         Gizmos.DrawLine(CeilingCheckCenter.position,(Vector2)CeilingCheckCenter.position + Vector2.up * playerData.CeilingCheckRadius);
 

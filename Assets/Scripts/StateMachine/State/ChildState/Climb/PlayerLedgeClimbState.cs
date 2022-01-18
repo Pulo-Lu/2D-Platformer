@@ -11,7 +11,6 @@ public class PlayerLedgeClimbState : PlayerState
     /// 是否正在抓着墙角
     /// </summary>
     private bool isHolding;
-
     /// <summary>
     /// 是否正在攀爬
     /// </summary>
@@ -53,7 +52,10 @@ public class PlayerLedgeClimbState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
+        //正在抓着墙角
+        isHolding = true;
+        //没有攀爬
+        isClimbing = false;
         //设置速度为0
         player.SetVelocityZero();
         //将玩家位置设置为 接触墙面 且 接触墙角 的位置（用于后续计算）
@@ -68,25 +70,6 @@ public class PlayerLedgeClimbState : PlayerState
 
         //将玩家位置设置为爬墙开始位置
         player.transform.position = startPos;
-    }
-
-    /// <summary>
-    /// 退出状态
-    /// </summary>
-    public override void Exit()
-    {
-        base.Exit();
-
-        //不抓着墙角
-        isHolding = false;
-        //攀爬
-        if (isClimbing)
-        {
-            //将玩家位置设置为爬墙结束位置
-            player.transform.position = endPos;
-            //不攀爬
-            isClimbing = false;
-        }
     }
 
     /// <summary>
@@ -113,39 +96,54 @@ public class PlayerLedgeClimbState : PlayerState
         player.SetVelocityZero();
         //将玩家位置设置为爬墙开始位置
         player.transform.position = startPos;
-        //动画结束
-        if (isAnimationFinish)
-        {
-            //检测头顶是否有墙
-            if (isTouchingCeiling)
-            {
-                //切换到蹲下等待状态
-                stateMachine.ChangeState(player.CrouchIdleState);
-            }
-            //没有
-            else
-            {
-                //切换到等待状态
-                stateMachine.ChangeState(player.IdleState);
-            }
-    
-        }
-        //抓着墙角 且 没有攀爬
-        else if (isHolding && !isClimbing)
+
+        //抓着墙角
+        if (isHolding)
         {
             //水平输入 为 玩家面向方向
             if (xInput == player.FaceDir)
             {
-                //设置正在攀爬
+                //攀爬
                 isClimbing = true;
+                //没有抓着墙角
+                isHolding = false;
                 //设置攀爬动画
                 player.animator.SetBool("ClimbLedge", true);
             }
-            //竖直输入为 -1 即 按下S
+            //竖直输入为-1 即 W 
             else if (yInput == -1)
             {
-                //切换到玩家在空中的状态
+                //切换玩家在空中的状态
                 stateMachine.ChangeState(player.InAirState);
+            }
+            //有跳跃输入
+            else if (jumpInput)
+            {
+                //切换到在两面墙之间来回跳状态
+                stateMachine.ChangeState(player.WallRoundJumpState);
+            }
+        }
+
+        //正在攀爬
+        if (isClimbing)
+        {
+            //动画结束
+            if (isAnimationFinish)
+            {
+                //将玩家位置设置为爬墙结束位置
+                player.transform.position = endPos;
+                //头顶有墙
+                if (CheckIsTouchCeiling())
+                {
+                    //切换到蹲下状态
+                    stateMachine.ChangeState(player.CrouchIdleState);
+                }
+                //没有墙
+                else
+                {
+                    //切换到等待状态
+                    stateMachine.ChangeState(player.IdleState);
+                }
             }
         }
     }
@@ -179,7 +177,7 @@ public class PlayerLedgeClimbState : PlayerState
     /// </summary>
     private bool CheckIsTouchCeiling()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(cornerPos + new Vector2(0.15f * player.FaceDir, 0), Vector2.up, 1.6f, playerData.GroundLayer);
+        RaycastHit2D hit2D = Physics2D.Raycast(cornerPos + new Vector2(0.015f * player.FaceDir, 0), Vector2.up, 1.6f, playerData.GroundLayer);
         Debug.DrawLine(cornerPos, cornerPos + Vector2.up * 1.6f, Color.red);
         return hit2D;
     }

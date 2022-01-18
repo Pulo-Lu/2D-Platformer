@@ -62,6 +62,7 @@ public class PlayerAbiilityState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         //不切换 由于不同行为：冲刺，跳跃，翻滚，反墙跳，攻击，操作对象也不同，由具体行为控制切换
         isAbilityDone = isAbilityOver = false;
 
@@ -76,25 +77,25 @@ public class PlayerAbiilityState : PlayerState
         base.LogicUpdate();
 
         //切换地面父类状态或者空中父类状态 且 没有结束
-        if (isAbilityDone) 
+        if (isAbilityDone && !isAbilityOver) 
         {
             //当前时间设置为上次使用能力的时间
             lastUseTime = Time.time;
             //为地面 且 玩家竖直速度接近0
             if (isGround && player.CurrentVelocity.y < 0.01f) 
             {
-                //头顶上有墙
-                if (isTouchingCeiling)
-                {
-                    //切换到下蹲等待状态
-                    stateMachine.ChangeState(player.CrouchIdleState);
-                }
-                //头顶上没有墙
-                else
-                {
-                    //切换到等待状态
+                ////头顶上有墙
+                //if (isTouchingCeiling)
+                //{
+                //    //切换到下蹲等待状态
+                //    stateMachine.ChangeState(player.CrouchIdleState);
+                //}
+                ////头顶上没有墙
+                //else
+                //{
+                //    //切换到等待状态
                     stateMachine.ChangeState(player.IdleState);
-                }
+                //}
             }
             //不是地面
             else

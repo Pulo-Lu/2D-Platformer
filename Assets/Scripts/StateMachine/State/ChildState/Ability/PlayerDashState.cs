@@ -8,15 +8,14 @@ using UnityEngine;
 public class PlayerDashState : PlayerAbiilityState
 {
     /// <summary>
-    /// 冲刺按键松开的时间
+    /// 冲刺方向
     /// </summary>
-    private float dashInputFalseTime;
-    /// <summary>
-    /// 冲刺是否持续中
-    /// </summary>
-    private bool isHold;
-
     private Vector2Int dashDir;
+
+    /// <summary>
+    /// 结束位置
+    /// </summary>
+    private Vector3 endPos;
 
     /// <summary>
     /// 构造方法
@@ -36,17 +35,16 @@ public class PlayerDashState : PlayerAbiilityState
     {
         base.Enter();
 
-        //冲刺持续中
-        isHold = true;
-
         //进入冲刺状态后不可再冲刺
         canUseAbility = false;
-
+        //设置速度为零
         player.SetVelocityZero();
-        //重新记录进入状态的时间
-        stateEnterTime = Time.unscaledTime;
+        //重力为零
+        player.rb.gravityScale = 0;
+        //检查是否需要翻转
+        player.CheckNeedFlip(dashDir.x);
         //残影
-        ShadowSpwaner.Instance.ShowShadow(player.gameObject, 5, playerData.DashTime);
+        //ShadowSpwaner.Instance.ShowShadow(player.gameObject, 5, playerData.DashTime);
     }
 
     /// <summary>
@@ -56,47 +54,22 @@ public class PlayerDashState : PlayerAbiilityState
     {
         base.LogicUpdate();
 
-        //有冲刺输入
-        if (dashInput) 
+        //不切换能力行为
+        if (!isAbilityDone)
         {
-            Debug.Log(1);
-
-            player.SetVelocityX(playerData.dashVelocity.x * player.FaceDir);
-            //时间间隔 大于等于 子弹时间最大持续时间
-            if (Time.unscaledTime - stateEnterTime >= playerData.MaxDashHoldTime)
-            {
-                //时间缩放恢复1
-                Time.timeScale = 1;
-                //无冲刺输入
-                dashInput = false;
-                //切换到能力行为
-                isAbilityDone = true;
-            }
+            //设置速度
+            player.SetVelocityX(dashDir.x * playerData.dashVelocity.x);
+            player.SetVelocityY(dashDir.y * playerData.dashVelocity.y);
         }
-        //无冲刺输入
-        else
+        //不切换能力行为 且 （当前时间减去 进入冲刺状态的时间 大于等于 冲刺需要的时间）||
+        //(y冲刺方向为1 且 头顶有墙) || 接触到墙 || (y冲刺方向为-1 且 接触地面)
+        if (!isAbilityDone && (Time.time - stateEnterTime >= playerData.DashTime || 
+            (dashDir.y == 1 && isTouchingCeiling) || player.CheckIsTouchWall() || (dashDir.y == -1 && isGround)))
         {
-            Debug.Log(2);
-            //冲刺持续中
-            if (isHold)
-            {
-                Debug.Log(3);
-                //时间缩放恢复1
-                Time.timeScale = 1;
-                //记录冲刺按键松开的时间
-                dashInputFalseTime = Time.unscaledTime;
-                //冲刺不在持续中
-                isHold = false;
-            }
-
-            //当前时间减去 冲刺按键松开的时间 大于等于 冲刺需要的时间
-            if (Time.time - dashInputFalseTime >= playerData.DashTime)
-            {
-                Debug.Log(4);
-                //切换到能力行为
-                isAbilityDone = true;
-            }
-           
+            //记录冲刺后的位置
+            endPos = player.transform.position;
+            //切换能力行为
+            isAbilityDone = true;
         }
     }
 
@@ -109,7 +82,10 @@ public class PlayerDashState : PlayerAbiilityState
 
         //设置速度为0
         player.SetVelocityZero();
-        
+        //玩家位置设置为冲刺后的位置
+        player.transform.position = endPos;
+        //恢复重力
+        player.rb.gravityScale = playerData.gravityScale;
     }
 
     /// <summary>
@@ -118,7 +94,17 @@ public class PlayerDashState : PlayerAbiilityState
     /// <returns></returns>
     public bool CanDash()
     {
-        //可以冲刺 且 当前时间 减去 上次使用时间 大于等于 冲刺冷却时间
-        return canUseAbility && Time.time - lastUseTime >= playerData.DashCoolTime;
+        //可以冲刺 或者 当前时间 减去 上次使用时间 大于等于 冲刺冷却时间
+        return canUseAbility || Time.time - lastUseTime >= playerData.DashCoolTime;
+    }
+
+    /// <summary>
+    /// 设置冲刺方向
+    /// </summary>
+    /// <param name="dir"></param>
+    public void SetDashDirection(Vector2Int dir)
+    {
+        //记录冲刺方向
+        dashDir = dir;
     }
 }
